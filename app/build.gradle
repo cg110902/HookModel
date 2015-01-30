@@ -12,7 +12,8 @@ android {
         versionName "1.0.5"
 
         ndk {
-            moduleName "JniTest"
+            moduleName "HookModel"
+            stl "gnustl_static"
         }
     }
     buildTypes {

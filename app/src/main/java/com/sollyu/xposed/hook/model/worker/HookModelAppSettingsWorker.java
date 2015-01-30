@@ -40,8 +40,8 @@ public class HookModelAppSettingsWorker
     {
         this.activity = hookModelAppSettingsActivity;
 
-        HookModelAppSettingsWorker.packageName = activity.getIntent().getStringExtra("packageName").toString();
-        HookModelAppSettingsWorker.appName     = activity.getIntent().getStringExtra("appName").toString();
+        HookModelAppSettingsWorker.packageName = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(3)).toString();
+        HookModelAppSettingsWorker.appName     = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(2)).toString();
 
         activity.setTitle(appName);
         activity.getActionBar().setLogo(HookModelAppListWorker.selectIconDrawable);
@@ -59,29 +59,27 @@ public class HookModelAppSettingsWorker
             super.onCreate(savedInstanceState);
             this.getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS);
             addPreferencesFromResource(R.xml.hook_model_app_settings);
+    
+            String hookModelManufacutrerKey                = HookModelAppSettingsWorker.packageName + HookModelAppListWorker.GetAppSettingsString(1);
+            String hookModelModelKey                       = HookModelAppSettingsWorker.packageName + HookModelAppListWorker.GetAppSettingsString(2);
+            String hookModelAdvancedSwitchKey              = HookModelAppSettingsWorker.packageName + HookModelAppListWorker.GetAppSettingsString(3);
+            String hookModelAdvancedImeiKey                = HookModelAppSettingsWorker.packageName + HookModelAppListWorker.GetAppSettingsString(4);
+            String hookModelAdvancedSimSerialNumberKey     = HookModelAppSettingsWorker.packageName + HookModelAppListWorker.GetAppSettingsString(5);
 
-            String hookModelManufacutrerKey                = HookModelAppSettingsWorker.packageName + ".hookModelManufacutrer";
-            String hookModelModelKey                       = HookModelAppSettingsWorker.packageName + ".hookModelModel";
-            String hookModelAdvancedSwitchKey              = HookModelAppSettingsWorker.packageName + ".hookModelAdvanced";
-            String hookModelAdvancedImeiKey                = HookModelAppSettingsWorker.packageName + ".hookModelAdvancedImei";
-            String hookModelAdvancedSimSerialNumberKey     = HookModelAppSettingsWorker.packageName + ".hookModelAdvancedSimSerialNumber";
-
-            String hookModelManufacutrerSummary            = getPreferenceManager().getSharedPreferences().getString(hookModelManufacutrerKey, getString(R.string.hookModelAppSettingsManufacturerSummary));
-            String hookModelModelSummary                   = getPreferenceManager().getSharedPreferences().getString(hookModelModelKey, getString(R.string.hookModelAppSettingsModelSummary));
-            String hookModelAdvancedImeiSummary            = getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedImeiKey, getString(R.string.hookModelAppSettingsAdvancedImeiSummary));
-            String hookModelAdvancedSimSerialNumberSummary = getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedSimSerialNumberKey, getString(R.string.hookModelAppSettingsAdvancedSimSerialNumber));
-
-
+            String hookModelManufacutrerSummary            = getPreferenceManager().getSharedPreferences().getString(hookModelManufacutrerKey, HookModelAppListWorker.GetAppSettingsString(16));
+            String hookModelModelSummary                   = getPreferenceManager().getSharedPreferences().getString(hookModelModelKey, HookModelAppListWorker.GetAppSettingsString(18));
+            String hookModelAdvancedImeiSummary            = getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedImeiKey, HookModelAppListWorker.GetAppSettingsString(17));
+            String hookModelAdvancedSimSerialNumberSummary = getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedSimSerialNumberKey, HookModelAppListWorker.GetAppSettingsString(19));
 
             // get items
-            m_hookModelOpenHookSwitchPreference                  = (SwitchPreference) findPreference("hookModelOpenHookSwitch");
-            m_hookModelAdvancedSwitchPreference                  = (SwitchPreference) findPreference("hookModelAdvancedSwitch");
-            m_hookModelManufacutrerEditTextPreference            = (EditTextPreference) findPreference("hookModelManufacutrer");
-            m_hookModelAdvancedImeiEditTextPreference            = (EditTextPreference) findPreference("hookModelAdvancedImei");
-            m_hookModelModelEditTextPreference                   = (EditTextPreference) findPreference("hookModelModel");
-            m_hookModelAdvancedSimSerialNumberEditTextPreference = (EditTextPreference) findPreference("hookModelAdvancedSimSerialNumber");
-            m_hookModelAppInfoPreference                         = findPreference("hookModelAppInfo");
-            m_hookModelSelectModelsPreference                    = findPreference("hookModelSelectModels");
+            m_hookModelOpenHookSwitchPreference                  = (SwitchPreference) findPreference(HookModelAppListWorker.GetAppSettingsString(6));
+            m_hookModelAdvancedSwitchPreference                  = (SwitchPreference) findPreference(HookModelAppListWorker.GetAppSettingsString(11));
+            m_hookModelManufacutrerEditTextPreference            = (EditTextPreference) findPreference(HookModelAppListWorker.GetAppSettingsString(7));
+            m_hookModelAdvancedImeiEditTextPreference            = (EditTextPreference) findPreference(HookModelAppListWorker.GetAppSettingsString(8));
+            m_hookModelModelEditTextPreference                   = (EditTextPreference) findPreference(HookModelAppListWorker.GetAppSettingsString(9));
+            m_hookModelAdvancedSimSerialNumberEditTextPreference = (EditTextPreference) findPreference(HookModelAppListWorker.GetAppSettingsString(10));
+            m_hookModelAppInfoPreference                         = findPreference(HookModelAppListWorker.GetAppSettingsString(12));
+            m_hookModelSelectModelsPreference                    = findPreference(HookModelAppListWorker.GetAppSettingsString(13));
 
             // reset key
             m_hookModelOpenHookSwitchPreference.setKey(HookModelAppSettingsWorker.packageName);
@@ -90,6 +88,11 @@ public class HookModelAppSettingsWorker
             m_hookModelAdvancedSwitchPreference.setKey(hookModelAdvancedSwitchKey);
             m_hookModelAdvancedImeiEditTextPreference.setKey(hookModelAdvancedImeiKey);
             m_hookModelAdvancedSimSerialNumberEditTextPreference.setKey(hookModelAdvancedSimSerialNumberKey);
+
+            // reset title
+            m_hookModelManufacutrerEditTextPreference.setTitle(HookModelAppListWorker.GetAppSettingsString(22));
+            m_hookModelModelEditTextPreference.setTitle(HookModelAppListWorker.GetAppSettingsString(23));
+            m_hookModelAdvancedSwitchPreference.setTitle(HookModelAppListWorker.GetAppSettingsString(25));
 
             // reset parent
             m_hookModelManufacutrerEditTextPreference.setDependency(HookModelAppSettingsWorker.packageName);
@@ -104,19 +107,21 @@ public class HookModelAppSettingsWorker
             m_hookModelAppInfoPreference.setIcon(HookModelAppListWorker.selectIconDrawable);
 
             // reset summary
-            m_hookModelManufacutrerEditTextPreference.setSummary(hookModelManufacutrerSummary == "" ? getString(R.string.hookModelAppSettingsManufacturerSummary) : hookModelManufacutrerSummary);
-            m_hookModelAdvancedImeiEditTextPreference.setSummary(hookModelAdvancedImeiSummary == "" ? getString(R.string.hookModelAppSettingsAdvancedImeiSummary) : hookModelAdvancedImeiSummary);
-            m_hookModelAdvancedSimSerialNumberEditTextPreference.setSummary(hookModelAdvancedSimSerialNumberSummary == "" ? getString(R.string.hookModelAppSettingsAdvancedSimSerialNumber) : hookModelAdvancedSimSerialNumberSummary);
-            m_hookModelModelEditTextPreference.setSummary(hookModelModelSummary == "" ? getString(R.string.hookModelAppSettingsModelSummary) : hookModelModelSummary);
+            m_hookModelManufacutrerEditTextPreference.setSummary(hookModelManufacutrerSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(16) : hookModelManufacutrerSummary);
+            m_hookModelAdvancedImeiEditTextPreference.setSummary(hookModelAdvancedImeiSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(17) : hookModelAdvancedImeiSummary);
+            m_hookModelAdvancedSimSerialNumberEditTextPreference.setSummary(hookModelAdvancedSimSerialNumberSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(19) : hookModelAdvancedSimSerialNumberSummary);
+            m_hookModelModelEditTextPreference.setSummary(hookModelModelSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(18) : hookModelModelSummary);
             m_hookModelAppInfoPreference.setSummary(HookModelAppSettingsWorker.packageName);
+            m_hookModelAdvancedSwitchPreference.setSummary(HookModelAppListWorker.GetAppSettingsString(26));
+            m_hookModelSelectModelsPreference.setSummary(HookModelAppListWorker.GetAppSettingsString(27));
 
             // reset value
             m_hookModelOpenHookSwitchPreference.setChecked(getPreferenceManager().getSharedPreferences().getBoolean(HookModelAppSettingsWorker.packageName, false));
             m_hookModelAdvancedSwitchPreference.setChecked(getPreferenceManager().getSharedPreferences().getBoolean(hookModelAdvancedSwitchKey, false));
-            m_hookModelManufacutrerEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelManufacutrerKey, ""));
-            m_hookModelAdvancedImeiEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedImeiKey, ""));
-            m_hookModelAdvancedSimSerialNumberEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedSimSerialNumberKey, ""));
-            m_hookModelModelEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelModelKey, ""));
+            m_hookModelManufacutrerEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelManufacutrerKey, HookModelAppListWorker.GetAppListString(5)));
+            m_hookModelAdvancedImeiEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedImeiKey, HookModelAppListWorker.GetAppListString(5)));
+            m_hookModelAdvancedSimSerialNumberEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelAdvancedSimSerialNumberKey, HookModelAppListWorker.GetAppListString(5)));
+            m_hookModelModelEditTextPreference.setText(getPreferenceManager().getSharedPreferences().getString(hookModelModelKey, HookModelAppListWorker.GetAppListString(5)));
 
             // on change listener
             m_hookModelManufacutrerEditTextPreference.setOnPreferenceChangeListener(editPreferenceChangeListener);
@@ -134,23 +139,23 @@ public class HookModelAppSettingsWorker
             @Override
             public boolean onPreferenceChange(Preference arg0, Object arg1)
             {
-                String summaryString = "";
+                String summaryString = HookModelAppListWorker.GetAppListString(5);
 
                 if (arg0 == m_hookModelManufacutrerEditTextPreference)
                 {
-                    summaryString = arg1.equals("") ? activity.getString(R.string.hookModelAppSettingsManufacturerSummary) : arg1.toString();
+                    summaryString = arg1.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(16) : arg1.toString();
                 }
                 else if (arg0 == m_hookModelModelEditTextPreference)
                 {
-                    summaryString = arg1.equals("") ? activity.getString(R.string.hookModelAppSettingsModelSummary) : arg1.toString();
+                    summaryString = arg1.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(18) : arg1.toString();
                 }
                 else if (arg0 == m_hookModelAdvancedImeiEditTextPreference)
                 {
-                    summaryString = arg1.equals("") ? activity.getString(R.string.hookModelAppSettingsAdvancedImeiSummary) : arg1.toString();
+                    summaryString = arg1.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(17) : arg1.toString();
                 }
                 else if (arg0 == m_hookModelAdvancedSimSerialNumberEditTextPreference)
                 {
-                    summaryString = arg1.equals("") ? activity.getString(R.string.hookModelAppSettingsAdvancedSimSerialNumber) : arg1.toString();
+                    summaryString = arg1.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(19) : arg1.toString();
                 }
 
                 arg0.setSummary(summaryString);
@@ -166,7 +171,7 @@ public class HookModelAppSettingsWorker
             {
                 if (mBackKeyPressedTimes == 0)
                 {
-                    android.widget.Toast.makeText(activity, activity.getString(R.string.hookModelAppSettingsStartAppToast), android.widget.Toast.LENGTH_SHORT).show();
+                    android.widget.Toast.makeText(activity, HookModelAppListWorker.GetAppSettingsString(24), android.widget.Toast.LENGTH_SHORT).show();
                     mBackKeyPressedTimes = 1;
                     new Thread()
                     {
@@ -205,19 +210,16 @@ public class HookModelAppSettingsWorker
             {
                 try
                 {
-                    final JSONObject result = new JSONObject(activity.getString(R.string.model_app_settings_select_model_list));
+                    final JSONObject result = new JSONObject(HookModelAppListWorker.GetAppSettingsString(28));
                     final String[] arrayFruit = new String[result.length()];
 
                     int i = 0;
                     Iterator<?> it = result.keys();
-                    while (it.hasNext())
-                    {
-                        arrayFruit[i++] = it.next().toString();
-                    }
+                    while (it.hasNext()) { arrayFruit[i++] = it.next().toString(); }
 
                     // show manufacturer alert dialog
                     android.app.AlertDialog.Builder manufacturerBuilder = new android.app.AlertDialog.Builder(activity);
-                    manufacturerBuilder.setTitle(R.string.hookModelAppSettingsSelectModelTitle);
+                    manufacturerBuilder.setTitle(HookModelAppListWorker.GetAppSettingsString(20));
                     manufacturerBuilder.setItems(arrayFruit, new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -226,20 +228,16 @@ public class HookModelAppSettingsWorker
                             try
                             {
                                 final JSONObject manufacturerJsonObject = result.getJSONObject(arrayFruit[arg1]);
-
                                 final String[] modelStrings = new String[manufacturerJsonObject.length()];
 
                                 // get model list
                                 int i = 0;
                                 Iterator<?> it = manufacturerJsonObject.keys();
-                                while (it.hasNext())
-                                {
-                                    modelStrings[i++] = it.next().toString();
-                                }
+                                while (it.hasNext()) { modelStrings[i++] = it.next().toString(); }
 
                                 // show model alert dialog
                                 android.app.AlertDialog.Builder modelBuilder = new android.app.AlertDialog.Builder(activity);
-                                modelBuilder.setTitle(R.string.hookModelAppSettingsSelectModelModel);
+                                modelBuilder.setTitle(HookModelAppListWorker.GetAppSettingsString(21));
                                 modelBuilder.setItems(modelStrings, new DialogInterface.OnClickListener()
                                 {
                                     @Override
@@ -249,23 +247,17 @@ public class HookModelAppSettingsWorker
                                         {
                                             JSONObject modeInfoJsonObject = manufacturerJsonObject.getJSONObject(modelStrings[arg1]);
 
-                                            m_hookModelManufacutrerEditTextPreference.setText(modeInfoJsonObject.getString("manufacturer"));
-                                            m_hookModelManufacutrerEditTextPreference.setSummary(modeInfoJsonObject.getString("manufacturer"));
-                                            m_hookModelModelEditTextPreference.setText(modeInfoJsonObject.getString("model"));
-                                            m_hookModelModelEditTextPreference.setSummary(modeInfoJsonObject.getString("model"));
+                                            m_hookModelManufacutrerEditTextPreference.setText(modeInfoJsonObject.getString(HookModelAppListWorker.GetAppSettingsString(14)));
+                                            m_hookModelManufacutrerEditTextPreference.setSummary(modeInfoJsonObject.getString(HookModelAppListWorker.GetAppSettingsString(14)));
+                                            m_hookModelModelEditTextPreference.setText(modeInfoJsonObject.getString(HookModelAppListWorker.GetAppSettingsString(15)));
+                                            m_hookModelModelEditTextPreference.setSummary(modeInfoJsonObject.getString(HookModelAppListWorker.GetAppSettingsString(15)));
                                         }
-                                        catch (JSONException e)
-                                        {
-                                            e.printStackTrace();
-                                        }
+                                        catch (JSONException e) { e.printStackTrace(); }
                                     }
                                 });
                                 modelBuilder.create().show();
                             }
-                            catch (JSONException e)
-                            {
-                                e.printStackTrace();
-                            }
+                            catch (JSONException e) { e.printStackTrace(); }
                         }
                     });
                     manufacturerBuilder.create().show();

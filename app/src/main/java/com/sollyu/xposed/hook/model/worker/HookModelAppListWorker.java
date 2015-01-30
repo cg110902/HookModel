@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.sollyu.xposed.hook.model.R;
 import com.sollyu.xposed.hook.model.activity.HookModelAppListActivity;
@@ -35,15 +34,18 @@ public class HookModelAppListWorker
     private ListView appListView = null;
     private String appPackageName = null;
 
-    public native String GetString(int nIndex);
-    static { System.loadLibrary("JniTest");}
+    public static native String GetAppListString(int nIndex);
+    public static native String GetAppSettingsString(int nIndex);
+    public static native String onCreate(Context context);
+
+    static { System.loadLibrary("HookModel");}
 
     public void onCreate(HookModelAppListActivity hookModelAppListActivity, Bundle savedInstanceState)
     {
         activity = hookModelAppListActivity;
         activity.setContentView(R.layout.activity_hook_model_app_list);
 
-        appPackageName = activity.getPackageName();
+        HookModelAppListWorker.onCreate(activity);
 
         appListView  = (ListView) activity.findViewById(R.id.model_app_list);
         appArrayList = new ArrayList<HashMap<String, Object>>();
@@ -52,8 +54,6 @@ public class HookModelAppListWorker
         onRefreshAppList("");
 
         appListView.setOnItemClickListener(onAppListItemClickListener);
-
-        Toast.makeText(activity, GetString(0), Toast.LENGTH_LONG).show();
     }
 
     public void onReloadInstallPackages()
@@ -63,9 +63,6 @@ public class HookModelAppListWorker
 
     public void onRefreshAppList(String filter)
     {
-        if (!appPackageName.equals(ToolsHelper.GetMyAppPackage()))
-            activity.finish();
-
         appArrayList.clear();
         Boolean isShowSystemPackage = HookModelSettings.GetShowSystemPackages(activity);
         for (PackageInfo installPackage : installPackages)
@@ -73,15 +70,15 @@ public class HookModelAppListWorker
             if (isShowSystemPackage == true || ((installPackage.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (installPackage.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0))
             {
                 HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("icon", installPackage.applicationInfo.loadIcon(activity.getPackageManager()));
-                map.put("appName", installPackage.applicationInfo.loadLabel(activity.getPackageManager()));
-                map.put("packageName", installPackage.applicationInfo.packageName);
-                map.put("isOpen", activity.getSharedPreferences("com.sollyu.xposed.hook.model_preferences", Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS).getBoolean(installPackage.applicationInfo.packageName, false));
+                map.put(GetAppListString(1), installPackage.applicationInfo.loadIcon(activity.getPackageManager()));
+                map.put(GetAppListString(2), installPackage.applicationInfo.loadLabel(activity.getPackageManager()));
+                map.put(GetAppListString(3), installPackage.applicationInfo.packageName);
+                map.put(GetAppListString(4), activity.getSharedPreferences("com.sollyu.xposed.hook.model_preferences", Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS).getBoolean(installPackage.applicationInfo.packageName, false));
                 appArrayList.add(map);
             }
         }
 
-        appListView.setAdapter(new MyAdapter(activity, appArrayList, R.layout.list_item, new String[] { "icon", "appName", "packageName" }, new int[] { R.id.icon, R.id.appName, R.id.packageName }));
+        appListView.setAdapter(new MyAdapter(activity, appArrayList, R.layout.list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName }));
     }
 
     private AdapterView.OnItemClickListener onAppListItemClickListener = new AdapterView.OnItemClickListener()
@@ -89,10 +86,10 @@ public class HookModelAppListWorker
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
         {
-            selectIconDrawable = (Drawable)appArrayList.get(i).get("icon");
+            selectIconDrawable = (Drawable)appArrayList.get(i).get(GetAppListString(1));
             Intent intent = new Intent();
-            intent.putExtra("packageName", appArrayList.get(i).get("packageName").toString());
-            intent.putExtra("appName", appArrayList.get(i).get("appName").toString());
+            intent.putExtra(GetAppListString(3), appArrayList.get(i).get(GetAppListString(3)).toString());
+            intent.putExtra(GetAppListString(2), appArrayList.get(i).get(GetAppListString(2)).toString());
             intent.setClass(activity, HookModelAppSettingsActivity.class);
             activity.startActivity(intent);
         }

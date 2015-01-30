@@ -9,14 +9,27 @@ extern "C" {
 #endif
 /*
  * Class:     com_sollyu_xposed_hook_model_worker_HookModelAppListWorker
- * Method:    GetString
+ * Method:    GetAppListString
  * Signature: (I)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_GetString
-  (JNIEnv *, jobject, jint)
-  {
-  return (*env)->NewStringUTF(env,"Hello From JNI!");
-  }
+JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_GetAppListString
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_sollyu_xposed_hook_model_worker_HookModelAppListWorker
+ * Method:    GetAppSettingsString
+ * Signature: (I)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_GetAppSettingsString
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_sollyu_xposed_hook_model_worker_HookModelAppListWorker
+ * Method:    onCreate
+ * Signature: (Landroid/content/Context;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_onCreate
+  (JNIEnv *, jclass, jobject);
 
 #ifdef __cplusplus
 }

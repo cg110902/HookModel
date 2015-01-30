@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.sollyu.xposed.hook.model.worker.HookModelAppListWorker;
+
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public class MyAdapter extends SimpleAdapter
     {
         View view = onCreateViewFromResource(position, convertView, parent, appResource);
         final Map<String, ?> dataSet = appData.get(position);
-        if ((Boolean)dataSet.get("isOpen"))
+        if ((Boolean)dataSet.get(HookModelAppListWorker.GetAppListString(4)))
             view.setBackgroundColor(android.graphics.Color.rgb(131,175,155));
         else
             view.setBackgroundColor(0x00000000);
@@ -107,10 +109,6 @@ public class MyAdapter extends SimpleAdapter
                 else if (v instanceof ImageView)
                 {
                     ((ImageView) v).setImageDrawable((Drawable) data);
-                }
-                else
-                {
-                    throw new IllegalStateException(v.getClass().getName() + " is not a " + "view that can be bounds by this SimpleAdapter");
                 }
             }
         }
