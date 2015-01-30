@@ -6,8 +6,14 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.sollyu.xposed.hook.model.R;
@@ -32,7 +38,10 @@ public class HookModelAppListWorker
     private ArrayList<HashMap<String, Object>> appArrayList = null;
     private List<PackageInfo> installPackages = null;
     private ListView appListView = null;
-    private String appPackageName = null;
+    private MyAdapter appListAdapter = null;
+
+    private EditText  searchEditText  = null;
+    private ImageView deleteImageView = null;
 
     public static native String GetAppListString(int nIndex);
     public static native String GetAppSettingsString(int nIndex);
@@ -47,18 +56,37 @@ public class HookModelAppListWorker
 
         HookModelAppListWorker.onCreate(activity);
 
-        appListView  = (ListView) activity.findViewById(R.id.model_app_list);
-        appArrayList = new ArrayList<HashMap<String, Object>>();
+        appListView     = (ListView) activity.findViewById(R.id.model_app_list);
+        searchEditText  = (EditText) activity.findViewById(R.id.etSearch);
+        deleteImageView = (ImageView) activity.findViewById(R.id.ivDeleteText);
+        appArrayList    = new ArrayList<HashMap<String, Object>>();
 
         onReloadInstallPackages();
         onRefreshAppList("");
 
         appListView.setOnItemClickListener(onAppListItemClickListener);
+        deleteImageView.setOnClickListener(deleteImageViewOnClickListener);
+        searchEditText.addTextChangedListener(searchTextChangedListener);
     }
 
     public void onReloadInstallPackages()
     {
         installPackages = ToolsHelper.GetInstalledPackages(activity);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        activity.getMenuInflater().inflate(R.menu.hook_model_app_list, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return activity.onOptionsItemSelected(item);
     }
 
     public void onRefreshAppList(String filter)
@@ -69,16 +97,24 @@ public class HookModelAppListWorker
         {
             if (isShowSystemPackage == true || ((installPackage.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (installPackage.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0))
             {
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put(GetAppListString(1), installPackage.applicationInfo.loadIcon(activity.getPackageManager()));
-                map.put(GetAppListString(2), installPackage.applicationInfo.loadLabel(activity.getPackageManager()));
-                map.put(GetAppListString(3), installPackage.applicationInfo.packageName);
-                map.put(GetAppListString(4), activity.getSharedPreferences("com.sollyu.xposed.hook.model_preferences", Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS).getBoolean(installPackage.applicationInfo.packageName, false));
-                appArrayList.add(map);
+                String appLabel   = installPackage.applicationInfo.loadLabel(activity.getPackageManager()).toString().toLowerCase();
+                String appPackage = installPackage.applicationInfo.packageName.toLowerCase();
+
+                filter = filter.toLowerCase();
+
+                if (filter.equals(HookModelAppListWorker.GetAppListString(5)) || appLabel.contains(filter) || appPackage.contains(filter))
+                {
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    map.put(GetAppListString(1), installPackage.applicationInfo.loadIcon(activity.getPackageManager()));
+                    map.put(GetAppListString(2), installPackage.applicationInfo.loadLabel(activity.getPackageManager()));
+                    map.put(GetAppListString(3), installPackage.applicationInfo.packageName);
+                    map.put(GetAppListString(4), activity.getSharedPreferences("com.sollyu.xposed.hook.model_preferences", Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS).getBoolean(installPackage.applicationInfo.packageName, false));
+                    appArrayList.add(map);
+                }
             }
         }
-
-        appListView.setAdapter(new MyAdapter(activity, appArrayList, R.layout.list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName }));
+        appListAdapter = new MyAdapter(activity, appArrayList, R.layout.list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName });
+        appListView.setAdapter(appListAdapter);
     }
 
     private AdapterView.OnItemClickListener onAppListItemClickListener = new AdapterView.OnItemClickListener()
@@ -92,6 +128,36 @@ public class HookModelAppListWorker
             intent.putExtra(GetAppListString(2), appArrayList.get(i).get(GetAppListString(2)).toString());
             intent.setClass(activity, HookModelAppSettingsActivity.class);
             activity.startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener deleteImageViewOnClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            searchEditText.setText("");
+        }
+    };
+
+    private TextWatcher searchTextChangedListener = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3)
+        {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3)
+        {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+            onRefreshAppList(editable.toString());
+            deleteImageView.setVisibility(editable.length() == 0 ? View.GONE : View.VISIBLE);
+            appListAdapter.notifyDataSetChanged();
         }
     };
 }
