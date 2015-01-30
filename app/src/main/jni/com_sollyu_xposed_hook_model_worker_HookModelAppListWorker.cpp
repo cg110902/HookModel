@@ -6,6 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "jni_log_utils.h"
+
+#define LOG_TAG   "=== TAG ==="
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -93,6 +97,32 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else return env->NewStringUTF("null");
 }
 
+jstring GetApplicationMetaData(JNIEnv *env, jobject context, jstring key)
+{
+    jclass cls_Context           = env->FindClass("android/content/Context");
+    jclass PackageManager        = env->FindClass("android/content/pm/PackageManager");
+    jclass PackageItemInfo       = env->FindClass("android/content/pm/PackageItemInfo");
+    jclass Bundle                = env->FindClass("android/os/Bundle");
+
+    jmethodID getPackageName     = env->GetMethodID(cls_Context    , "getPackageName"     , "()Ljava/lang/String;");
+    jmethodID getPackageManager  = env->GetMethodID(cls_Context    , "getPackageManager"  , "()Landroid/content/pm/PackageManager;");
+    jmethodID getApplicationInfo = env->GetMethodID(PackageManager , "getApplicationInfo" , "(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;");
+    jmethodID loadLabel          = env->GetMethodID(PackageItemInfo, "loadLabel"          , "(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;");
+    jmethodID getString          = env->GetMethodID(Bundle         , "getString"          , "(Ljava/lang/String;)Ljava/lang/String;");
+
+    jfieldID imp_metaData        = env->GetFieldID(PackageItemInfo, "metaData", "Landroid/os/Bundle;");
+
+    jstring str_packageName      = (jstring)env->CallObjectMethod(context, getPackageName);
+
+    jobject pm = env->CallObjectMethod(context, getPackageManager);
+    jobject in = env->CallObjectMethod(pm, getApplicationInfo, str_packageName, 0x80);
+
+    jobject metaData    = env->GetObjectField(in, imp_metaData);
+    jstring metaDataKey = (jstring)env->CallObjectMethod(metaData, getString, key);
+
+    return metaDataKey;
+}
+
 JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_onCreate(JNIEnv * env, jclass , jobject context)
 {
     jclass cls_Context           = env->FindClass("android/content/Context");
@@ -111,10 +141,13 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
 
     jstring str_appLabel         = (jstring)env->CallObjectMethod(in, loadLabel, pm);
 
+    jstring key = env->NewStringUTF("xposeddescription");
+
     const char *szPackageName    = env->GetStringUTFChars(str_packageName, 0);
     const char *szAppLabel       = env->GetStringUTFChars(str_appLabel, 0);
+    const char *szAppDes         = env->GetStringUTFChars(GetApplicationMetaData(env, context, key), 0);
 
-    if (strcmp(szPackageName, "com.sollyu.xposed.hook.model") == 0 && strcmp(szAppLabel, "型号伪装") == 0)
+    if (strcmp(szPackageName, "com.sollyu.xposed.hook.model") == 0 && strcmp(szAppLabel, "型号伪装") == 0 && strcmp(szAppDes, "这个可以伪装手机软件显示的手机型号") == 0 )
     {
         isModified = false;
     }

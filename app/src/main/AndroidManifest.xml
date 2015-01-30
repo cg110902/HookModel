@@ -7,9 +7,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".activity.HookModelAppListActivity"
-            android:label="@string/app_name" >
+
+        <meta-data android:name="xposedmodule"      android:value="true" />
+        <meta-data android:name="xposeddescription" android:value="这个可以伪装手机软件显示的手机型号" />
+        <meta-data android:name="xposedminversion"  android:value="42+" />
+
+        <activity android:name=".activity.HookModelAppListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
