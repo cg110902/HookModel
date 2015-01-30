@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="常规设置" >
+        <SwitchPreference android:key="hookModelSettingShowSystemApp" />
+        <Preference android:key="hookModelSettingCreateShortCut"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="关于" >
+        <Preference android:key="hookModelSettingAbout" android:enabled="false"/>
+    </PreferenceCategory>
+    
+</PreferenceScreen>

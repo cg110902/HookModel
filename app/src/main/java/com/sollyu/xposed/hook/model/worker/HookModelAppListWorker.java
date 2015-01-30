@@ -18,8 +18,9 @@ import android.widget.ListView;
 
 import com.sollyu.xposed.hook.model.R;
 import com.sollyu.xposed.hook.model.activity.HookModelAppListActivity;
+import com.sollyu.xposed.hook.model.activity.HookModelAppListAdapter;
+import com.sollyu.xposed.hook.model.activity.HookModelAppSettingActivity;
 import com.sollyu.xposed.hook.model.activity.HookModelAppSettingsActivity;
-import com.sollyu.xposed.hook.model.activity.MyAdapter;
 import com.sollyu.xposed.hook.model.config.HookModelSettings;
 import com.sollyu.xposed.hook.model.utils.ToolsHelper;
 
@@ -38,13 +39,14 @@ public class HookModelAppListWorker
     private ArrayList<HashMap<String, Object>> appArrayList = null;
     private List<PackageInfo> installPackages = null;
     private ListView appListView = null;
-    private MyAdapter appListAdapter = null;
+    private HookModelAppListAdapter appListAdapter = null;
 
     private EditText  searchEditText  = null;
     private ImageView deleteImageView = null;
 
     public static native String GetAppListString(int nIndex);
     public static native String GetAppSettingsString(int nIndex);
+    public static native String GetAppSettingString(int nIndex);
     public static native String onCreate(Context context);
 
     static { System.loadLibrary("HookModel");}
@@ -76,17 +78,24 @@ public class HookModelAppListWorker
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        activity.getMenuInflater().inflate(R.menu.hook_model_app_list, menu);
+        menu.add(0, 0, 0, HookModelAppListWorker.GetAppListString(7 )).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 1, 1, HookModelAppListWorker.GetAppListString(8 )).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 2, 2, HookModelAppListWorker.GetAppListString(9 )).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 3, 3, HookModelAppListWorker.GetAppListString(10)).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id)
+        {
+            case 0: ToolsHelper.StartActivity(activity, HookModelAppSettingActivity.class); break;
+            case 1: onRefreshAppList(HookModelAppListWorker.GetAppListString(5)); break;
+            case 2: ToolsHelper.OpenUrl(activity, HookModelAppListWorker.GetAppListString(12));break;
+            case 3: ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(10), HookModelAppListWorker.GetAppListString(11)); break;
         }
-        return activity.onOptionsItemSelected(item);
+        return true;
     }
 
     public void onRefreshAppList(String filter)
@@ -113,7 +122,7 @@ public class HookModelAppListWorker
                 }
             }
         }
-        appListAdapter = new MyAdapter(activity, appArrayList, R.layout.list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName });
+        appListAdapter = new HookModelAppListAdapter(activity, appArrayList, R.layout.list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName });
         appListView.setAdapter(appListAdapter);
     }
 

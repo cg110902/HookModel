@@ -25,6 +25,14 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
 
 /*
  * Class:     com_sollyu_xposed_hook_model_worker_HookModelAppListWorker
+ * Method:    GetAppSettingString
+ * Signature: (I)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_GetAppSettingString
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_sollyu_xposed_hook_model_worker_HookModelAppListWorker
  * Method:    onCreate
  * Signature: (Landroid/content/Context;)Ljava/lang/String;
  */

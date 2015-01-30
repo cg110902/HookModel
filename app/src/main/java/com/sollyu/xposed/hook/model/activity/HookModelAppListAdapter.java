@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by wangsy on 15/1/29.
  */
-public class MyAdapter extends SimpleAdapter
+public class HookModelAppListAdapter extends SimpleAdapter
 {
     private int            appResource    = 0;
     private int[]          appTo          = null;
@@ -25,7 +25,7 @@ public class MyAdapter extends SimpleAdapter
     private LayoutInflater layoutInflater = null;
     private List<? extends Map<String, ?>> appData;
 
-    public MyAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to)
+    public HookModelAppListAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to)
     {
         super(context, data, resource, from, to);
 

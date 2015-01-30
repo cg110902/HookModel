@@ -28,6 +28,7 @@ public class HookModelAppListActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
         return  hookModelAppListWorker.onOptionsItemSelected(item);
     }
 }

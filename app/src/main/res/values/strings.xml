@@ -2,10 +2,6 @@
 <resources>
 
     <string name="app_name">型号伪装</string>
-    <string name="hook_model_app_list_activity_action_settings">设置</string>
-    <string name="hook_model_app_list_activity_action_refresh">刷新</string>
-    <string name="hook_model_app_list_activity_action_helper">教程</string>
-    <string name="hook_model_app_list_activity_action_about">关于</string>
 
     <string name="model_string_alert_about">关于</string>
     <string name="model_string_alert_tip">提示</string>
