@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HookModel</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="hook_model_app_list_activity_action_settings">设置</string>
+    <string name="hook_model_app_list_activity_action_refresh">刷新</string>
+    <string name="hook_model_app_list_activity_action_helper">教程</string>
+    <string name="hook_model_app_list_activity_action_about">关于</string>
+
+    <string name="model_string_alert_about">关于</string>
+    <string name="model_string_alert_tip">提示</string>
+    <string name="model_string_alert_ok">确定</string>
+
+    <string name="hookModelAppSettingsManufacturerTitle">厂商伪装</string>
+    <string name="hookModelAppSettingsManufacturerSummary">伪装一个别家的手机厂商</string>
+    <string name="hookModelAppSettingsModelTitle">型号伪装</string>
+    <string name="hookModelAppSettingsModelSummary">伪装一个别家的手机型号</string>
+    <string name="hookModelAppSettingsStartAppToast">再次点击将会重新打开应用</string>
+    <string name="hookModelAppSettingsSelectModelTitle">选择厂商</string>
+    <string name="hookModelAppSettingsSelectModelModel">选择型号</string>
+    <string name="hookModelAppSettingsAdvanced">高级伪装</string>
+    <string name="hookModelAppSettingsAdvancedImeiSummary">伪装一个IMEI手机串号</string>
+    <string name="hookModelAppSettingsAdvancedSimSerialNumber">伪装SIM卡序列号</string>
+    <string name="model_app_settings_select_model_list">{\"小米\":{\"小米1\":{\"manufacturer\":\"Xiaomi\",\"model\":\"2013022\"},\"小米1s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI-ONE Plus\"},\"小米2\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2\"},\"小米2s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2s\"},\"小米3\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 3\"},\"小米4 4G版\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI 4LTE\"},\"红米\":{\"manufacturer\":\"Xiaomi\",\"model\":\"HM NOTE 1TD\"}},\"魅族\":{\"MX2\":{\"manufacturer\":\"M040\",\"model\":\"meizu\"},\"MX3\":{\"manufacturer\":\"meizu\",\"model\":\"M353\"},\"MX4\":{\"manufacturer\":\"meizu\",\"model\":\"MX4\"},\"MX4 Pro\":{\"manufacturer\":\"meizu\",\"model\":\"MX4 Pro\"},\"魅蓝\":{\"manufacturer\":\"meizu\",\"model\":\"m1 note\"}},\"三星\":{\"Galaxy Nexus\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy Nexus\"},\"Galaxy S5\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy S5\"},\"GALAXY S IV\":{\"manufacturer\":\"samsung\",\"model\":\"GT-I9500\"}},\"iРhone(P为特殊字符)\":{\"4\":{\"manufacturer\":\"iРhone\",\"model\":\"4\"},\"5\":{\"manufacturer\":\"iРhone\",\"model\":\"5\"},\"6\":{\"manufacturer\":\"iРhone\",\"model\":\"6\"},\"4s\":{\"manufacturer\":\"iРhone\",\"model\":\"4s\"},\"5s\":{\"manufacturer\":\"iРhone\",\"model\":\"5s\"},\"5c\":{\"manufacturer\":\"iРhone\",\"model\":\"5c\"},\"6 Plus\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus\"},\"土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"土豪金\"},\"6 Plus 土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 土豪金\"},\"6 Plus 镶钻版\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 镶钻版\"}},\"其它\":{\"我的手机 你买不到\":{\"manufacturer\":\"我的手机\",\"model\":\"你买不到\"},\"这破手机 不要也罢\":{\"manufacturer\":\"这破手机\",\"model\":\"不要也罢\"},\"手机型号 回复可见\":{\"manufacturer\":\"手机型号\",\"model\":\"回复可见\"}}}</string>
+
+
+    <string name="model_preferences_setting_show_system_app_key">model_settings_show_system_app</string>
+
+</resources>

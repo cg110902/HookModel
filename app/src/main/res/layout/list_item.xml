@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="48dip"
+        android:layout_height="48dip"
+        android:src="@drawable/ic_launcher" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="fill_parent"
+            android:layout_height="24dip"
+            android:gravity="bottom|left"
+            android:text="Title"
+            />
+
+        <TextView
+            android:id="@+id/packageName"
+            android:layout_width="fill_parent"
+            android:layout_height="24dip"
+            android:text="Summary"
+            android:layout_below="@+id/appName"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="已开启"
+            android:id="@+id/textView"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

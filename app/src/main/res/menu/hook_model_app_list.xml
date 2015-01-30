@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HookModelAppListActivity" >
+    <item android:id="@+id/action_settings"
+        android:title="@string/hook_model_app_list_activity_action_settings"
+        android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/hook_model_app_list_activity_action_refresh"
+        android:title="@string/hook_model_app_list_activity_action_refresh"
+        android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/hook_model_app_list_activity_action_helper"
+        android:title="@string/hook_model_app_list_activity_action_helper"
+        android:showAsAction="ifRoom" />
+
+    <item android:id="@+id/hook_model_app_list_activity_action_about"
+        android:title="@string/hook_model_app_list_activity_action_about"
+        android:showAsAction="ifRoom" />
+</menu>

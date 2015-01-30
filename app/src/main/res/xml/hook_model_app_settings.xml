@@ -1,0 +1,58 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="型号伪装" >
+        <SwitchPreference
+            android:key="hookModelOpenHookSwitch"
+            android:summary="对此程序进行伪装"
+            android:title="型号伪装" />
+
+        <Preference
+            android:dependency="hookModelOpenHookSwitch"
+            android:key="hookModelSelectModels"
+            android:summary="选择一市面上常用的机型进行伪装"
+            android:title="常用机型" />
+
+        <EditTextPreference
+            android:dependency="hookModelOpenHookSwitch"
+            android:dialogTitle="请输入你要伪装的手机厂商"
+            android:key="hookModelManufacutrer"
+            android:summary="@string/hookModelAppSettingsManufacturerSummary"
+            android:title="@string/hookModelAppSettingsManufacturerTitle" />
+
+        <EditTextPreference
+            android:dependency="hookModelOpenHookSwitch"
+            android:dialogTitle="请输入你要伪装的手机型号"
+            android:key="hookModelModel"
+            android:summary="@string/hookModelAppSettingsModelSummary"
+            android:title="@string/hookModelAppSettingsModelTitle" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/hookModelAppSettingsAdvanced" >
+        <SwitchPreference
+            android:key="hookModelAdvancedSwitch"
+            android:summary="对此软件获得信息进行高级伪装"
+            android:dependency="hookModelOpenHookSwitch"
+            android:title="@string/hookModelAppSettingsAdvanced" />
+
+        <EditTextPreference
+            android:dependency="hookModelAdvancedSwitch"
+            android:key="hookModelAdvancedImei"
+            android:summary="@string/hookModelAppSettingsAdvancedImeiSummary"
+            android:title="串号伪装" />
+
+        <EditTextPreference
+            android:dependency="hookModelAdvancedSwitch"
+            android:key="hookModelAdvancedSimSerialNumber"
+            android:summary="@string/hookModelAppSettingsAdvancedSimSerialNumber"
+            android:title="SIM卡号伪装" android:positiveButtonText="Pos" android:negativeButtonText="Neg"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="应用信息" >
+        <Preference
+            android:key="hookModelAppInfo"
+            android:summary="应用描述"
+            android:title="应用信息" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
