@@ -54,7 +54,7 @@ public class HookModelAppListWorker
     public void onCreate(HookModelAppListActivity hookModelAppListActivity, Bundle savedInstanceState)
     {
         activity = hookModelAppListActivity;
-        activity.setContentView(R.layout.activity_hook_model_app_list);
+        activity.setContentView(R.layout.hook_model_activity_app_list);
 
         HookModelAppListWorker.onCreate(activity);
 
@@ -122,7 +122,7 @@ public class HookModelAppListWorker
                 }
             }
         }
-        appListAdapter = new HookModelAppListAdapter(activity, appArrayList, R.layout.list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName });
+        appListAdapter = new HookModelAppListAdapter(activity, appArrayList, R.layout.hook_model_app_list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName });
         appListView.setAdapter(appListAdapter);
     }
 

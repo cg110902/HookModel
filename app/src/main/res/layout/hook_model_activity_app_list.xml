@@ -33,11 +33,14 @@
                 android:id="@+id/ivDeleteText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
                 android:onClick="ImageClick_SearchDeleteText"
                 android:src="@drawable/delete"
-                android:visibility="gone" />
+                android:layout_centerVertical="true"
+                android:layout_alignRight="@+id/etSearch"
+                android:layout_alignEnd="@+id/etSearch"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="18dp"
+                android:visibility="gone"/>
         </RelativeLayout>
     </RelativeLayout>
 

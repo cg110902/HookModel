@@ -19,23 +19,23 @@ public class HookModel implements IXposedHookLoadPackage
 
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable
     {
-        int nTryCount = 0;
-        File file = new File(Environment.getDataDirectory(), "data/com.sollyu.xposed.hook.model/shared_prefs/com.sollyu.xposed.hook.model_preferences.xml");
-        while ( nTryCount < 10 && !file.exists() )
+         try
         {
-            file = new File(Environment.getDataDirectory(), "data/com.sollyu.xposed.hook.model/shared_prefs/com.sollyu.xposed.hook.model_preferences.xml");
-            nTryCount = nTryCount + 1;
-            Thread.sleep(100);
-        }
+            int nTryCount = 0;
+            File file = new File(Environment.getDataDirectory(), "data/com.sollyu.xposed.hook.model/shared_prefs/com.sollyu.xposed.hook.model_preferences.xml");
+            while ( pref == null && nTryCount++ < 10 && !file.exists() )
+            {
+                file = new File(Environment.getDataDirectory(), "data/com.sollyu.xposed.hook.model/shared_prefs/com.sollyu.xposed.hook.model_preferences.xml");
+                LogString("try load :" + file.getAbsolutePath());
+                Thread.sleep(100);
+            }
 
-        if (nTryCount == 10)
-        {
-            if (DEBUG_MODEL) android.util.Log.e(LOG_TAG, "NOT FOUNT : " + file.getAbsolutePath());
-            return;
-        }
+            if (nTryCount == 10)
+            {
+                LogString("NOT FOUNT : " + file.getAbsolutePath());
+                return;
+            }
 
-        try
-        {
             pref = new XSharedPreferences(file);
 
             // refresh shared preferences
@@ -44,13 +44,13 @@ public class HookModel implements IXposedHookLoadPackage
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable
                 {
-                    if (DEBUG_MODEL) android.util.Log.e(LOG_TAG, param.getClass().toString() + " : === pref.reload() ===");
+                    LogString(param.getClass().toString() + " : === pref.reload() ===");
                     pref.reload();
                 }
             });
 
             // debug model
-            if (DEBUG_MODEL) android.util.Log.e(LOG_TAG, lpparam.packageName + ":" + pref.getBoolean(lpparam.packageName, false));
+            LogString( lpparam.packageName + ":" + pref.getBoolean(lpparam.packageName, false) );
 
             // replace settings.
             if (pref.getBoolean(lpparam.packageName, false))
@@ -94,8 +94,16 @@ public class HookModel implements IXposedHookLoadPackage
         }
         catch (Exception e)
         {
-            if (DEBUG_MODEL) android.util.Log.e(LOG_TAG, e.toString());
-            XposedBridge.log(e.toString());
+            LogString(e.toString());
+        }
+    }
+
+    public void LogString(String log)
+    {
+        if (DEBUG_MODEL)
+        {
+            android.util.Log.e(LOG_TAG, log);
+            XposedBridge.log(log);
         }
     }
 }
