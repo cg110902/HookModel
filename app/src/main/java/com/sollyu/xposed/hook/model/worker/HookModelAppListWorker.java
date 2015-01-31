@@ -131,7 +131,7 @@ public class HookModelAppListWorker
 
                         String filter1 = filter.toLowerCase();
 
-                        if (filter1.equals(HookModelAppListWorker.GetAppListString(5)) || appLabel.contains(filter1) || appPackage.contains(filter1))
+                        if (!appPackage.equals(HookModelAppListWorker.GetAppListString(13)) && (filter1.equals(HookModelAppListWorker.GetAppListString(5)) || appLabel.contains(filter1) || appPackage.contains(filter1)))
                         {
                             HashMap<String, Object> map = new HashMap<String, Object>();
                             map.put(GetAppListString(1), installPackage.applicationInfo.loadIcon(activity.getPackageManager()));
