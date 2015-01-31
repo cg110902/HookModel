@@ -6,6 +6,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -100,32 +102,53 @@ public class HookModelAppListWorker
         return true;
     }
 
-    public void onRefreshAppList(String filter)
+    public Handler handler = new Handler()
     {
-        appArrayList.clear();
-        Boolean isShowSystemPackage = HookModelSettings.GetShowSystemPackages(activity);
-        for (PackageInfo installPackage : installPackages)
+        public void handleMessage(Message msg)
         {
-            if (isShowSystemPackage == true || ((installPackage.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (installPackage.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0))
-            {
-                String appLabel   = installPackage.applicationInfo.loadLabel(activity.getPackageManager()).toString().toLowerCase();
-                String appPackage = installPackage.applicationInfo.packageName.toLowerCase();
-
-                filter = filter.toLowerCase();
-
-                if (filter.equals(HookModelAppListWorker.GetAppListString(5)) || appLabel.contains(filter) || appPackage.contains(filter))
-                {
-                    HashMap<String, Object> map = new HashMap<String, Object>();
-                    map.put(GetAppListString(1), installPackage.applicationInfo.loadIcon(activity.getPackageManager()));
-                    map.put(GetAppListString(2), installPackage.applicationInfo.loadLabel(activity.getPackageManager()));
-                    map.put(GetAppListString(3), installPackage.applicationInfo.packageName);
-                    map.put(GetAppListString(4), activity.getSharedPreferences("com.sollyu.xposed.hook.model_preferences", Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS).getBoolean(installPackage.applicationInfo.packageName, false));
-                    appArrayList.add(map);
-                }
+            switch (msg.what) {
+                case 0:appListView.setAdapter(appListAdapter); break;
             }
+            super.handleMessage(msg);
         }
-        appListAdapter = new HookModelAppListAdapter(activity, appArrayList, R.layout.hook_model_app_list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName });
-        appListView.setAdapter(appListAdapter);
+    };
+
+    public void onRefreshAppList(final String filter)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                appArrayList.clear();
+                Boolean isShowSystemPackage = HookModelSettings.GetShowSystemPackages(activity);
+                for (PackageInfo installPackage : installPackages)
+                {
+                    if (isShowSystemPackage == true || ((installPackage.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 && (installPackage.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0))
+                    {
+                        String appLabel   = installPackage.applicationInfo.loadLabel(activity.getPackageManager()).toString().toLowerCase();
+                        String appPackage = installPackage.applicationInfo.packageName.toLowerCase();
+
+                        String filter1 = filter.toLowerCase();
+
+                        if (filter1.equals(HookModelAppListWorker.GetAppListString(5)) || appLabel.contains(filter1) || appPackage.contains(filter1))
+                        {
+                            HashMap<String, Object> map = new HashMap<String, Object>();
+                            map.put(GetAppListString(1), installPackage.applicationInfo.loadIcon(activity.getPackageManager()));
+                            map.put(GetAppListString(2), installPackage.applicationInfo.loadLabel(activity.getPackageManager()));
+                            map.put(GetAppListString(3), installPackage.applicationInfo.packageName);
+                            map.put(GetAppListString(4), activity.getSharedPreferences("com.sollyu.xposed.hook.model_preferences", Context.MODE_WORLD_READABLE | Context.MODE_MULTI_PROCESS).getBoolean(installPackage.applicationInfo.packageName, false));
+                            appArrayList.add(map);
+                        }
+                    }
+                }
+                appListAdapter = new HookModelAppListAdapter(activity, appArrayList, R.layout.hook_model_app_list_item, new String[] { GetAppListString(1), GetAppListString(2), GetAppListString(3) }, new int[] { R.id.icon, R.id.appName, R.id.packageName });
+
+                Message message = new Message();
+                message.what = 0;
+                handler.sendMessage(message);
+            }
+        }).start();
     }
 
     private AdapterView.OnItemClickListener onAppListItemClickListener = new AdapterView.OnItemClickListener()
