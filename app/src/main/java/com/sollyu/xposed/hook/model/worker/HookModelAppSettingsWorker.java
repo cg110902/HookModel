@@ -40,6 +40,8 @@ public class HookModelAppSettingsWorker
     {
         this.activity = hookModelAppSettingsActivity;
 
+        ToolsHelper.TranslucentStatus(activity, "#222222");
+
         HookModelAppSettingsWorker.packageName = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(3)).toString();
         HookModelAppSettingsWorker.appName     = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(2)).toString();
 

@@ -56,6 +56,8 @@ public class HookModelAppListWorker
         activity = hookModelAppListActivity;
         activity.setContentView(R.layout.hook_model_activity_app_list);
 
+        ToolsHelper.TranslucentStatus(activity, "#222222");
+
         HookModelAppListWorker.onCreate(activity);
 
         appListView     = (ListView) activity.findViewById(R.id.model_app_list);

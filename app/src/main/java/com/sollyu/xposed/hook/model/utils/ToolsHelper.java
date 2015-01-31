@@ -1,5 +1,6 @@
 package com.sollyu.xposed.hook.model.utils;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,9 +8,20 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sollyu.xposed.hook.model.R;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -127,8 +139,74 @@ public class ToolsHelper
         context.sendBroadcast(shortcut);
     }
 
-    public static String GetMyAppPackage()
+    public static void TranslucentStatus(Activity activity, String color)
     {
-        return new String(new byte[]{ 99, 111, 109, 46, 115, 111, 108, 108, 121, 117, 46, 120, 112, 111, 115, 101, 100, 46, 104, 111, 111, 107, 46, 109, 111, 100, 101, 108 });
+        if (android.os.Build.VERSION.SDK_INT > 18)
+        {
+            Window window = activity.getWindow();
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            //设置根布局的内边距
+            android.view.ViewGroup relativeLayout = (android.view.ViewGroup)activity.findViewById(android.R.id.content);
+            relativeLayout.setPadding(0, GetStatusBarHeight(activity) + GetActionBarHeight(activity), 0, 0);
+
+            // 创建TextView
+            final TextView textView = new TextView(activity);
+            LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, GetStatusBarHeight(activity));
+            textView.setBackgroundColor(Color.parseColor(color));
+            textView.setLayoutParams(lParams);
+            // 获得根视图并把TextView加进去。
+            ViewGroup view = (ViewGroup) activity.getWindow().getDecorView();
+            view.addView(textView);
+
+            activity.getActionBar().setBackgroundDrawable( new ColorDrawable(Color.parseColor(color)) );
+        }
+    }
+
+    // 获取手机状态栏高度
+    public static int GetStatusBarHeight(Activity activity)
+    {
+        int x = 0, statusBarHeight = 0;
+        try {
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            Object obj = c.newInstance();
+            Field field = c.getField("status_bar_height");
+            x = Integer.parseInt(field.get(obj).toString());
+            statusBarHeight = activity.getResources().getDimensionPixelSize(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return statusBarHeight;
+    }
+
+    // 获取ActionBar的高度
+    public static int GetActionBarHeight(Activity activity)
+    {
+        TypedValue tv = new TypedValue();
+        int actionBarHeight = 0;
+        if (activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))// 如果资源是存在的、有效的
+        {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, activity.getResources().getDisplayMetrics());
+        }
+        return actionBarHeight;
+    }
+
+    public static Drawable GetActionBarBackground(Context context)
+    {
+        int[] android_styleable_ActionBar = { android.R.attr.background };
+
+        // Need to get resource id of style pointed to from actionBarStyle
+        TypedValue outValue = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.actionBarStyle, outValue, true);
+        // Now get action bar style values...
+        TypedArray abStyle = context.getTheme().obtainStyledAttributes(outValue.resourceId, android_styleable_ActionBar);
+        try
+        {
+            return abStyle.getDrawable(0);
+        }
+        finally
+        {
+            abStyle.recycle();
+        }
     }
 }

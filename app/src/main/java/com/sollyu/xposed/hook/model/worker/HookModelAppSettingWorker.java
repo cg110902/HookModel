@@ -22,6 +22,7 @@ public class HookModelAppSettingWorker
     public void onCreate(HookModelAppSettingActivity hookModelAppSettingActivity, Bundle savedInstanceState)
     {
         HookModelAppSettingWorker.activity = hookModelAppSettingActivity;
+        ToolsHelper.TranslucentStatus(activity, "#222222");
 
         activity.getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
     }
