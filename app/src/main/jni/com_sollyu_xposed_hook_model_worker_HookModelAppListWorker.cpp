@@ -43,7 +43,8 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else if (nIndex == 9) return env->NewStringUTF("教程");
     else if (nIndex == 10) return env->NewStringUTF("关于");
     else if (nIndex == 11) return env->NewStringUTF("Copyright © Sollyu 2015\nVersion 1.0.5");
-    else if (nIndex == 12) return env->NewStringUTF("http://www.sollyu.com/hook-model/");
+    //else if (nIndex == 12) return env->NewStringUTF("http://www.sollyu.com/hook-model/");
+    else if (nIndex == 12) return env->NewStringUTF("http://www.cnblogs.com/sollyu/p/4227163.html");
     else if (nIndex == 13) return env->NewStringUTF("com.sollyu.xposed.hook.model");
     else return env->NewStringUTF("null");
 }
@@ -79,6 +80,10 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else if (nIndex == 26) return env->NewStringUTF("对此软件获得信息进行高级伪装");
     else if (nIndex == 27) return env->NewStringUTF("选择一市面上常用的机型进行伪装");
     else if (nIndex == 28) return env->NewStringUTF("{\"小米\":{\"小米1\":{\"manufacturer\":\"Xiaomi\",\"model\":\"2013022\"},\"小米1s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI-ONE Plus\"},\"小米2\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2\"},\"小米2s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2s\"},\"小米3\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 3\"},\"小米4 4G版\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI 4LTE\"},\"红米\":{\"manufacturer\":\"Xiaomi\",\"model\":\"HM NOTE 1TD\"}},\"魅族\":{\"MX2\":{\"manufacturer\":\"M040\",\"model\":\"meizu\"},\"MX3\":{\"manufacturer\":\"meizu\",\"model\":\"M353\"},\"MX4\":{\"manufacturer\":\"meizu\",\"model\":\"MX4\"},\"MX4 Pro\":{\"manufacturer\":\"meizu\",\"model\":\"MX4 Pro\"},\"魅蓝\":{\"manufacturer\":\"meizu\",\"model\":\"m1 note\"}},\"三星\":{\"Galaxy Nexus\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy Nexus\"},\"Galaxy S5\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy S5\"},\"GALAXY S IV\":{\"manufacturer\":\"samsung\",\"model\":\"GT-I9500\"}},\"iРhone(P为特殊字符)\":{\"4\":{\"manufacturer\":\"iРhone\",\"model\":\"4\"},\"5\":{\"manufacturer\":\"iРhone\",\"model\":\"5\"},\"6\":{\"manufacturer\":\"iРhone\",\"model\":\"6\"},\"4s\":{\"manufacturer\":\"iРhone\",\"model\":\"4s\"},\"5s\":{\"manufacturer\":\"iРhone\",\"model\":\"5s\"},\"5c\":{\"manufacturer\":\"iРhone\",\"model\":\"5c\"},\"6 Plus\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus\"},\"土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"土豪金\"},\"6 Plus 土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 土豪金\"},\"6 Plus 镶钻版\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 镶钻版\"}},\"其它\":{\"我的手机 你买不到\":{\"manufacturer\":\"我的手机\",\"model\":\"你买不到\"},\"这破手机 不要也罢\":{\"manufacturer\":\"这破手机\",\"model\":\"不要也罢\"},\"手机型号 回复可见\":{\"manufacturer\":\"手机型号\",\"model\":\"回复可见\"}}}");
+    else if (nIndex == 29) return env->NewStringUTF(".hookModelAdvancedMacAddress");
+    else if (nIndex == 30) return env->NewStringUTF("hookModelAdvancedMacAddress");
+    else if (nIndex == 31) return env->NewStringUTF("伪装Mac地址");
+    else if (nIndex == 32) return env->NewStringUTF("伪装成另一个Mac地址");
     else return env->NewStringUTF("null");
 }
 

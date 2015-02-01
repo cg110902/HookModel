@@ -7,13 +7,12 @@ import java.io.File;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class HookModel implements IXposedHookLoadPackage
 {
-    public static Boolean DEBUG_MODEL = false;
+    public static Boolean DEBUG_MODEL = true;
     public static String LOG_TAG = "=== MODEL_HOOK ===";
     public static XSharedPreferences pref = null;
 
@@ -60,6 +59,7 @@ public class HookModel implements IXposedHookLoadPackage
                 final String hookModelAdvancedSwitchKey          = lpparam.packageName + ".hookModelAdvanced";
                 final String hookModelAdvancedImeiKey            = lpparam.packageName + ".hookModelAdvancedImei";
                 final String hookModelAdvancedSimSerialNumberKey = lpparam.packageName + ".hookModelAdvancedSimSerialNumber";
+                final String hookModelAdvancedMacAddressKey      = lpparam.packageName + ".hookModelAdvancedMacAddress";
 
                 Class<?> classBuild = XposedHelpers.findClass("android.os.Build", lpparam.classLoader);
 
@@ -70,6 +70,8 @@ public class HookModel implements IXposedHookLoadPackage
                 if (pref.getBoolean(hookModelAdvancedSwitchKey, false))
                 {
                     Class<?> classTelephonyManager = XposedHelpers.findClass("android.telephony.TelephonyManager", lpparam.classLoader);
+                    Class<?> classWifiInfo         = XposedHelpers.findClass("android.net.wifi.WifiInfo", lpparam.classLoader);
+
                     XposedHelpers.findAndHookMethod(classTelephonyManager, "getDeviceId", new XC_MethodHook()
                     {
                         @Override
@@ -89,6 +91,16 @@ public class HookModel implements IXposedHookLoadPackage
                             super.afterHookedMethod(param);
                         }
                     });
+
+                    XposedHelpers.findAndHookConstructor(classWifiInfo, "getMacAddress", new XC_MethodHook()
+                    {
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) throws Throwable
+                        {
+                            param.setResult(pref.getString(hookModelAdvancedMacAddressKey, "null"));
+                            super.afterHookedMethod(param);
+                        }
+                    });
                 }
             }
         }
@@ -103,7 +115,7 @@ public class HookModel implements IXposedHookLoadPackage
         if (DEBUG_MODEL)
         {
             android.util.Log.e(LOG_TAG, log);
-            XposedBridge.log(log);
+            // XposedBridge.log(log);
         }
     }
 }

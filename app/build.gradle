@@ -16,23 +16,24 @@ android {
             stl "gnustl_static"
         }
     }
-//    buildTypes {
-//        release {
-//            runProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//
-//        debug {
-//            runProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
 
-//    android.applicationVariants.all { variant ->
-//        def file = variant.outputFile
-//        variant.outputFile = new File(file.parent, file.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
-//    }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            output.outputFile = new File(output.outputFile.parent, file.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"));
+        }
+    }
 }
 
 dependencies {
