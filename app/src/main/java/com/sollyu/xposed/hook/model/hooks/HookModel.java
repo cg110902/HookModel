@@ -12,7 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class HookModel implements IXposedHookLoadPackage
 {
-    public static Boolean DEBUG_MODEL = true;
+    public static Boolean DEBUG_MODEL = false;
     public static String LOG_TAG = "=== MODEL_HOOK ===";
     public static XSharedPreferences pref = null;
 
@@ -92,11 +92,12 @@ public class HookModel implements IXposedHookLoadPackage
                         }
                     });
 
-                    XposedHelpers.findAndHookConstructor(classWifiInfo, "getMacAddress", new XC_MethodHook()
+                    XposedHelpers.findAndHookMethod(classWifiInfo, "getMacAddress", new XC_MethodHook()
                     {
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
+                            LogString(param.getResultOrThrowable());
                             param.setResult(pref.getString(hookModelAdvancedMacAddressKey, "null"));
                             super.afterHookedMethod(param);
                         }
@@ -110,11 +111,11 @@ public class HookModel implements IXposedHookLoadPackage
         }
     }
 
-    public void LogString(String log)
+    public void LogString(Object log)
     {
         if (DEBUG_MODEL)
         {
-            android.util.Log.e(LOG_TAG, log);
+            android.util.Log.e(LOG_TAG, log.toString());
             // XposedBridge.log(log);
         }
     }

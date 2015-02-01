@@ -119,7 +119,7 @@ public class HookModelAppSettingsWorker
             m_hookModelManufacutrerEditTextPreference.setSummary(hookModelManufacutrerSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(16) : hookModelManufacutrerSummary);
             m_hookModelAdvancedImeiEditTextPreference.setSummary(hookModelAdvancedImeiSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(17) : hookModelAdvancedImeiSummary);
             m_hookModelAdvancedSimSerialNumberEditTextPreference.setSummary(hookModelAdvancedSimSerialNumberSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(19) : hookModelAdvancedSimSerialNumberSummary);
-            m_hookModelAdvancedMacAddressEditTextPreference.setSummary(hookModelAdvancedMacAddressSummary.equals(HookModelAppListWorker.GetAppListString(32)) ? HookModelAppListWorker.GetAppSettingsString(19) : hookModelAdvancedMacAddressSummary);
+            m_hookModelAdvancedMacAddressEditTextPreference.setSummary(hookModelAdvancedMacAddressSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(32) : hookModelAdvancedMacAddressSummary);
             m_hookModelModelEditTextPreference.setSummary(hookModelModelSummary.equals(HookModelAppListWorker.GetAppListString(5)) ? HookModelAppListWorker.GetAppSettingsString(18) : hookModelModelSummary);
             m_hookModelAppInfoPreference.setSummary(HookModelAppSettingsWorker.packageName);
             m_hookModelAdvancedSwitchPreference.setSummary(HookModelAppListWorker.GetAppSettingsString(26));
