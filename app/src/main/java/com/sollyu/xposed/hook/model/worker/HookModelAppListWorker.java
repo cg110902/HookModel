@@ -1,6 +1,7 @@
 package com.sollyu.xposed.hook.model.worker;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -58,7 +59,7 @@ public class HookModelAppListWorker
         activity = hookModelAppListActivity;
         activity.setContentView(R.layout.hook_model_activity_app_list);
 
-        ToolsHelper.TranslucentStatus(activity, "#222222");
+        ToolsHelper.TranslucentStatus(activity, "#1958b7");
 
         HookModelAppListWorker.onCreate(activity);
 
@@ -73,6 +74,16 @@ public class HookModelAppListWorker
         appListView.setOnItemClickListener(onAppListItemClickListener);
         deleteImageView.setOnClickListener(deleteImageViewOnClickListener);
         searchEditText.addTextChangedListener(searchTextChangedListener);
+
+        if (activity.getSharedPreferences("ModelSettings", Context.MODE_PRIVATE).getBoolean("first_run_app", false) == false)
+        {
+            ToolsHelper.ShowAlertDialogYesNo(activity, HookModelAppListWorker.GetAppListString(17), HookModelAppListWorker.GetAppListString(14), HookModelAppListWorker.GetAppListString(15), HookModelAppListWorker.GetAppListString(16), new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) { ToolsHelper.OpenUrl(activity, HookModelAppListWorker.GetAppListString(12)); }
+            }, null);
+            activity.getSharedPreferences("ModelSettings", Context.MODE_PRIVATE).edit().putBoolean("first_run_app", true).commit();
+        }
     }
 
     public void onReloadInstallPackages()

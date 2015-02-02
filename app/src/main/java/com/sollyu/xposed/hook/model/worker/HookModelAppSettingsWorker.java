@@ -10,6 +10,7 @@ import com.sollyu.xposed.hook.model.R;
 import com.sollyu.xposed.hook.model.activity.HookModelAppSettingsActivity;
 import com.sollyu.xposed.hook.model.utils.RootUtil;
 import com.sollyu.xposed.hook.model.utils.ToolsHelper;
+import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsItem.HookModelAppSettingsAdvancedAndroidId;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsItem.HookModelAppSettingsAdvancedImei;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsItem.HookModelAppSettingsAdvancedSimSerialNumber;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsItem.HookModelAppSettingsMacAddress;
@@ -39,7 +40,7 @@ public class HookModelAppSettingsWorker
     {
         this.activity = hookModelAppSettingsActivity;
 
-        ToolsHelper.TranslucentStatus(activity, "#222222");
+        ToolsHelper.TranslucentStatus(activity, "#1958b7");
 
         HookModelAppSettingsWorker.packageName = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(3)).toString();
         HookModelAppSettingsWorker.appName     = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(2)).toString();
@@ -60,6 +61,7 @@ public class HookModelAppSettingsWorker
         protected HookModelAppSettingsAdvancedImei            m_hookModelAdvancedImeiEditTextPreference            = null;
         protected HookModelAppSettingsAdvancedSimSerialNumber m_hookModelAdvancedSimSerialNumberEditTextPreference = null;
         protected HookModelAppSettingsMacAddress              m_hookModelAdvancedMacAddressEditTextPreference      = null;
+        protected HookModelAppSettingsAdvancedAndroidId       m_hookModelAdvancedAndroidIdEditTextPreference       = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -75,6 +77,7 @@ public class HookModelAppSettingsWorker
             m_hookModelAdvancedImeiEditTextPreference            = new HookModelAppSettingsAdvancedImei(this, HookModelAppSettingsWorker.packageName, m_hookModelOpenAdvancedSwitchPreference.getKey());
             m_hookModelAdvancedSimSerialNumberEditTextPreference = new HookModelAppSettingsAdvancedSimSerialNumber(this, HookModelAppSettingsWorker.packageName, m_hookModelOpenAdvancedSwitchPreference.getKey());
             m_hookModelAdvancedMacAddressEditTextPreference      = new HookModelAppSettingsMacAddress(this, HookModelAppSettingsWorker.packageName, m_hookModelOpenAdvancedSwitchPreference.getKey());
+            m_hookModelAdvancedAndroidIdEditTextPreference       = new HookModelAppSettingsAdvancedAndroidId(this, HookModelAppSettingsWorker.packageName, m_hookModelOpenAdvancedSwitchPreference.getKey());
 
             // get items
             m_hookModelAppInfoPreference                         = findPreference(HookModelAppListWorker.GetAppSettingsString(12));

@@ -16,14 +16,13 @@ import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppS
 public class HookModelAppSettingWorker
 {
     private static HookModelAppSettingActivity activity = null;
-    // private static Preference       m_hookModelSettingsCreateShortCutPreference;
     private static Preference       m_hookModelSettingsAboutPreference;
     private static SwitchPreference m_hookModelSettingShowSystemAppSwitchPreference;
 
     public void onCreate(HookModelAppSettingActivity hookModelAppSettingActivity, Bundle savedInstanceState)
     {
         HookModelAppSettingWorker.activity = hookModelAppSettingActivity;
-        ToolsHelper.TranslucentStatus(activity, "#222222");
+        ToolsHelper.TranslucentStatus(activity, "#1958b7");
 
         activity.getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
     }
@@ -31,6 +30,7 @@ public class HookModelAppSettingWorker
     public static class PrefsFragment extends PreferenceFragment
     {
         protected HookModelAppSettingShortCut m_hookModelSettingsCreateShortCutPreference = null;
+
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
@@ -39,6 +39,7 @@ public class HookModelAppSettingWorker
             getPreferenceManager().setSharedPreferencesName(HookModelAppListWorker.GetAppSettingString(1));
             addPreferencesFromResource(R.xml.hook_model_app_setting);
 
+            // 注：因开市启桌面图标，所以去掉创建桌面快捷方式
             // m_hookModelSettingsCreateShortCutPreference = new HookModelAppSettingShortCut(this);
 
             m_hookModelSettingsAboutPreference              = findPreference(HookModelAppListWorker.GetAppSettingString(8));

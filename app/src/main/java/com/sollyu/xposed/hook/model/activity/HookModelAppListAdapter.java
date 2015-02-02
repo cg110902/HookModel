@@ -1,6 +1,7 @@
 package com.sollyu.xposed.hook.model.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class HookModelAppListAdapter extends SimpleAdapter
         View view = onCreateViewFromResource(position, convertView, parent, appResource);
         final Map<String, ?> dataSet = appData.get(position);
         if ((Boolean)dataSet.get(HookModelAppListWorker.GetAppListString(4)))
-            view.setBackgroundColor(android.graphics.Color.rgb(131,175,155));
+            view.setBackgroundColor(Color.parseColor("#4177c8"));
         else
             view.setBackgroundColor(0x00000000);
 

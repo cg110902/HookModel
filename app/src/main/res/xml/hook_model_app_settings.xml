@@ -12,6 +12,7 @@
         <EditTextPreference android:key="hookModelAdvancedImei" />
         <EditTextPreference android:key="hookModelAdvancedSimSerialNumber" />
         <EditTextPreference android:key="hookModelAdvancedMacAddress" />
+        <EditTextPreference android:key="hookModelAdvancedAndroidId" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="应用信息" >

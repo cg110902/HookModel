@@ -60,6 +60,7 @@ public class HookModel implements IXposedHookLoadPackage
                 final String hookModelAdvancedImeiKey            = lpparam.packageName + ".hookModelAdvancedImei";
                 final String hookModelAdvancedSimSerialNumberKey = lpparam.packageName + ".hookModelAdvancedSimSerialNumber";
                 final String hookModelAdvancedMacAddressKey      = lpparam.packageName + ".hookModelAdvancedMacAddress";
+                final String hookModelAdvancedAndroidIdKey       = lpparam.packageName + ".hookModelAdvancedAndroidId";
 
                 Class<?> classBuild = XposedHelpers.findClass("android.os.Build", lpparam.classLoader);
 
@@ -71,13 +72,15 @@ public class HookModel implements IXposedHookLoadPackage
                 {
                     Class<?> classTelephonyManager = XposedHelpers.findClass("android.telephony.TelephonyManager", lpparam.classLoader);
                     Class<?> classWifiInfo         = XposedHelpers.findClass("android.net.wifi.WifiInfo", lpparam.classLoader);
+                    Class<?> classSettingsSecure   = XposedHelpers.findClass("android.provider.Settings.Secure", lpparam.classLoader);
 
                     XposedHelpers.findAndHookMethod(classTelephonyManager, "getDeviceId", new XC_MethodHook()
                     {
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
-                            param.setResult(pref.getString(hookModelAdvancedImeiKey, "null"));
+                            String saveValue = pref.getString(hookModelAdvancedImeiKey, "null");
+                            if (!saveValue.equals("null")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
                     });
@@ -87,7 +90,8 @@ public class HookModel implements IXposedHookLoadPackage
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
-                            param.setResult(pref.getString(hookModelAdvancedSimSerialNumberKey, "null"));
+                            String saveValue = pref.getString(hookModelAdvancedSimSerialNumberKey, "null");
+                            if (!saveValue.equals("null")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
                     });
@@ -97,8 +101,19 @@ public class HookModel implements IXposedHookLoadPackage
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
-                            LogString(param.getResultOrThrowable());
-                            param.setResult(pref.getString(hookModelAdvancedMacAddressKey, "null"));
+                            String saveValue = pref.getString(hookModelAdvancedMacAddressKey, "null");
+                            if (!saveValue.equals("null")) param.setResult(saveValue);
+                            super.afterHookedMethod(param);
+                        }
+                    });
+
+                    XposedHelpers.findAndHookMethod(classSettingsSecure, "getString", android.content.ContentResolver.class , java.lang.String.class, new XC_MethodHook()
+                    {
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) throws Throwable
+                        {
+                            String saveValue = pref.getString(hookModelAdvancedAndroidIdKey, "null");
+                            if (param.args[1].equals("android_id") && !saveValue.equals("null")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
                     });
