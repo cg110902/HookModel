@@ -84,6 +84,9 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else if (nIndex == 30) return env->NewStringUTF("hookModelAdvancedMacAddress");
     else if (nIndex == 31) return env->NewStringUTF("伪装Mac地址");
     else if (nIndex == 32) return env->NewStringUTF("伪装成另一个Mac地址");
+    else if (nIndex == 33) return env->NewStringUTF("对此程序进行伪装");
+    else if (nIndex == 34) return env->NewStringUTF("串号伪装");
+    else if (nIndex == 35) return env->NewStringUTF("SIM卡号伪装");
     else return env->NewStringUTF("null");
 }
 

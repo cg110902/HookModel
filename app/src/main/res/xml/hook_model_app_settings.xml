@@ -1,47 +1,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory android:title="型号伪装" >
-        <SwitchPreference
-            android:key="hookModelOpenHookSwitch"
-            android:summary="对此程序进行伪装"
-            android:title="型号伪装" />
-
-        <Preference
-            android:key="hookModelSelectModels"
-            android:title="常用机型" />
-
-        <EditTextPreference
-            android:dialogTitle="请输入你要伪装的手机厂商"
-            android:key="hookModelManufacutrer" />
-
-        <EditTextPreference
-            android:dialogTitle="请输入你要伪装的手机型号"
-            android:key="hookModelModel" />
-
+        <SwitchPreference android:key="hookModelOpenHookSwitch" />
+        <Preference android:key="hookModelSelectModels" android:title="常用机型" />
+        <EditTextPreference android:key="hookModelManufacutrer" />
+        <EditTextPreference android:key="hookModelModel" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="高级伪装" >
-        <SwitchPreference
-            android:key="hookModelAdvancedSwitch"/>
-
-        <EditTextPreference
-            android:key="hookModelAdvancedImei"
-            android:title="串号伪装" />
-
-        <EditTextPreference
-            android:key="hookModelAdvancedSimSerialNumber"
-            android:title="SIM卡号伪装"/>
-
-        <EditTextPreference
-            android:key="hookModelAdvancedMacAddress"
-            android:title="伪装Mac地址"/>
+        <SwitchPreference android:key="hookModelAdvancedSwitch"/>
+        <EditTextPreference android:key="hookModelAdvancedImei" />
+        <EditTextPreference android:key="hookModelAdvancedSimSerialNumber" />
+        <EditTextPreference android:key="hookModelAdvancedMacAddress" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="应用信息" >
-        <Preference
-            android:key="hookModelAppInfo"
-            android:summary="应用描述"
-            android:title="应用信息" />
+        <Preference android:key="hookModelAppInfo" />
     </PreferenceCategory>
 
 </PreferenceScreen>

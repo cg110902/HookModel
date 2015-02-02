@@ -3,7 +3,7 @@
 
     <PreferenceCategory android:title="常规设置" >
         <SwitchPreference android:key="hookModelSettingShowSystemApp" />
-        <Preference android:key="hookModelSettingCreateShortCut"/>
+        <!--<Preference android:key="hookModelSettingCreateShortCut"/>-->
     </PreferenceCategory>
     
     <PreferenceCategory android:title="关于" >
