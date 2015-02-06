@@ -5,10 +5,15 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.sollyu.xposed.hook.model.R;
 import com.sollyu.xposed.hook.model.activity.HookModelAppSettingsActivity;
 import com.sollyu.xposed.hook.model.utils.RootUtil;
+import com.sollyu.xposed.hook.model.utils.SystemBarTintManager;
 import com.sollyu.xposed.hook.model.utils.ToolsHelper;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsItem.HookModelAppSettingsAdvancedAndroidId;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsItem.HookModelAppSettingsAdvancedImei;
@@ -40,15 +45,34 @@ public class HookModelAppSettingsWorker
     {
         this.activity = hookModelAppSettingsActivity;
 
-        ToolsHelper.TranslucentStatus(activity, "#1958b7");
+        // ToolsHelper.TranslucentStatus(activity, "#1958b7");
 
         HookModelAppSettingsWorker.packageName = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(3)).toString();
         HookModelAppSettingsWorker.appName     = activity.getIntent().getStringExtra(HookModelAppListWorker.GetAppListString(2)).toString();
 
         activity.setTitle(appName);
         activity.getActionBar().setLogo(HookModelAppListWorker.selectIconDrawable);
+        activity.getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(false);
+        tintManager.setStatusBarTintColor(android.graphics.Color.parseColor("#1958b7"));
+        tintManager.setNavigationBarTintColor(android.graphics.Color.parseColor("#1958b7"));
+        tintManager.setNavigationBarAlpha(0.5f);
+        activity.getActionBar().setBackgroundDrawable( new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#1958b7")) );
 
         activity.getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
+    }
+
+    public boolean onMenuItemSelected(int featureId, MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home: activity.finish(); break;
+        }
+
+        return true;
     }
 
     public static class PrefsFragment extends PreferenceFragment
@@ -97,6 +121,14 @@ public class HookModelAppSettingsWorker
             // on click listener
             m_hookModelAppInfoPreference.setOnPreferenceClickListener(appInfoPreferenceClickListener);
             m_hookModelSelectModelsPreference.setOnPreferenceClickListener(selectModelPreferenceClickListener);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            View view = super.onCreateView(inflater, container, savedInstanceState);
+            view.findViewById(android.R.id.list).setFitsSystemWindows(true);
+            return view;
         }
 
         private Preference.OnPreferenceClickListener appInfoPreferenceClickListener = new Preference.OnPreferenceClickListener()

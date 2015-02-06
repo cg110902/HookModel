@@ -2,6 +2,7 @@ package com.sollyu.xposed.hook.model.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsWorker;
 
@@ -17,5 +18,13 @@ public class HookModelAppSettingsActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         hookModelAppSettingsWorker.onCreate(this, savedInstanceState);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item)
+    {
+        super.onMenuItemSelected(featureId, item);
+
+        return hookModelAppSettingsWorker.onMenuItemSelected(featureId, item);
     }
 }

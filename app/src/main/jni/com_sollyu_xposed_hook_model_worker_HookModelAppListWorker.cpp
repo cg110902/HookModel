@@ -46,14 +46,15 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else if (nIndex == 8) return env->NewStringUTF("刷新");
     else if (nIndex == 9) return env->NewStringUTF("教程");
     else if (nIndex == 10) return env->NewStringUTF("关于");
-    else if (nIndex == 11) return env->NewStringUTF("Copyright © Sollyu 2015\nVersion 1.1.0");
-    else if (nIndex == 12) return env->NewStringUTF("http://www.sollyu.com/hook-model/");
-    // else if (nIndex == 12) return env->NewStringUTF("http://www.cnblogs.com/sollyu/p/4227163.html");
+    else if (nIndex == 11) return env->NewStringUTF("Copyright © Sollyu 2015\nVersion 1.1.1");
+    // else if (nIndex == 12) return env->NewStringUTF("http://www.sollyu.com/hook-model/");
+    else if (nIndex == 12) return env->NewStringUTF("http://www.cnblogs.com/sollyu/p/4227163.html");
     else if (nIndex == 13) return env->NewStringUTF("com.sollyu.xposed.hook.model");
     else if (nIndex == 14) return env->NewStringUTF("发现您是第一次运行本软件\n是否查看教程");
     else if (nIndex == 15) return env->NewStringUTF("打开教程");
     else if (nIndex == 16) return env->NewStringUTF("不，谢谢");
     else if (nIndex == 17) return env->NewStringUTF("提示");
+    else if (nIndex == 18) return env->NewStringUTF("评分");
     else return env->NewStringUTF("null");
 }
 
@@ -99,6 +100,7 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else if (nIndex == 37) return env->NewStringUTF("hookModelAdvancedAndroidId");
     else if (nIndex == 38) return env->NewStringUTF("伪装一个Android ID");
     else if (nIndex == 39) return env->NewStringUTF("伪装Android ID");
+    else if (nIndex == 40) return env->NewStringUTF("随机");
 
     else return env->NewStringUTF("null");
 }
@@ -149,10 +151,7 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
 {
     android::jni::JniHelper::Init(env);
     android::content::Context ccc(context);
-
-    android::util::Log::e("=== TAG ===", ccc.getPackageName());
     android::content::pm::ApplicationInfo applicationInfo = ccc.getPackageManager().getApplicationInfo(ccc.getPackageName(), 0);
-    android::util::Log::e("=== TAG ===", applicationInfo.loadLabel(ccc.getPackageManager().getObject()));
 
     jclass cls_Context           = env->FindClass("android/content/Context");
     jclass PackageManager        = env->FindClass("android/content/pm/PackageManager");

@@ -9,15 +9,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.sollyu.xposed.hook.model.R;
 
@@ -146,20 +141,6 @@ public class ToolsHelper
             Window window = activity.getWindow();
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            //设置根布局的内边距
-            android.view.ViewGroup relativeLayout = (android.view.ViewGroup)activity.findViewById(android.R.id.content);
-            relativeLayout.setPadding(0, GetStatusBarHeight(activity) + GetActionBarHeight(activity), 0, 0);
-
-            // 创建TextView
-            final TextView textView = new TextView(activity);
-            LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, GetStatusBarHeight(activity));
-            textView.setBackgroundColor(Color.parseColor(color));
-            textView.setLayoutParams(lParams);
-            // 获得根视图并把TextView加进去。
-            ViewGroup view = (ViewGroup) activity.getWindow().getDecorView();
-            view.addView(textView);
-
-            activity.getActionBar().setBackgroundDrawable( new ColorDrawable(Color.parseColor(color)) );
         }
     }
 
@@ -208,5 +189,21 @@ public class ToolsHelper
         {
             abStyle.recycle();
         }
+    }
+
+    public static long Random(int nMin, int nMax)
+    {
+        return Math.round(Math.random()*(nMax-nMin)+nMin);
+    }
+
+    public static String RandomString(int nMin, int nMax, int nLen)
+    {
+        String randomString = "";
+        for (int i=0; i<nLen; i++)
+        {
+            int rand=(int)Math.round(Math.random()*(nMax-nMin)+nMin);
+            randomString += String.valueOf(rand);
+        }
+        return  randomString;
     }
 }

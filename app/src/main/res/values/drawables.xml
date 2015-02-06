@@ -1,0 +1,6 @@
+<resources>
+    <drawable name="media_pager_bg">@color/common_bg</drawable>
+    <drawable name="media_pager_margin">@color/media_pager_margin_color</drawable>
+    <drawable name="mz_background_dark">@color/mz_background_dark</drawable>
+    <drawable name="mz_background_light">@color/mz_background_light</drawable>
+</resources>

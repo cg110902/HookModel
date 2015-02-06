@@ -9,10 +9,10 @@
 
     <PreferenceCategory android:title="高级伪装" >
         <SwitchPreference android:key="hookModelAdvancedSwitch"/>
-        <EditTextPreference android:key="hookModelAdvancedImei" />
-        <EditTextPreference android:key="hookModelAdvancedSimSerialNumber" />
-        <EditTextPreference android:key="hookModelAdvancedMacAddress" />
-        <EditTextPreference android:key="hookModelAdvancedAndroidId" />
+        <com.sollyu.xposed.hook.model.worker.EditTextDialogPreference android:key="hookModelAdvancedImei" />
+        <com.sollyu.xposed.hook.model.worker.EditTextDialogPreference android:key="hookModelAdvancedSimSerialNumber" />
+        <com.sollyu.xposed.hook.model.worker.EditTextDialogPreference android:key="hookModelAdvancedMacAddress" />
+        <com.sollyu.xposed.hook.model.worker.EditTextDialogPreference android:key="hookModelAdvancedAndroidId" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="应用信息" >

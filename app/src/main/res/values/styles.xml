@@ -3,6 +3,39 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <!-- translucent system bars -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="CustomTheme" parent="@style/Theme.DeviceDefault.Light.Color.DodgerBlue">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="Theme.DeviceDefault.Light.Color.DodgerBlue" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:actionBarStyle">@style/Widget.DeviceDefault.Light.ActionBar.Color.DodgerBlue</item>
+        <item name="android:actionButtonStyle">@style/Widget.DeviceDefault.Light.ActionButton.Color.DodgerBlue</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.DeviceDefault.Light.ActionButton.Overflow.Color.DodgerBlue</item>
+    </style>
+
+    <style name="Widget.DeviceDefault.Light.ActionBar.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:background">@drawable/mz_titlebar_background_bottom_color_dodgerblue</item>
+        <item name="android:backgroundStacked">@drawable/mz_titlebar_background_bottom_blank</item>
+        <item name="android:backgroundSplit">@drawable/mz_smartbar_background</item>
+    </style>
+
+    <style name="Widget.DeviceDefault.Light.ActionButton.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ActionButton">
+        <item name="android:src">@drawable/mz_ic_sb_back</item>
+    </style>
+
+    <style name="Widget.DeviceDefault.Light.ActionButton.Overflow.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/mz_ic_sb_more</item>
+    </style>
+
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/mc_chooser_text_color_selected</item>
     </style>
 
 </resources>

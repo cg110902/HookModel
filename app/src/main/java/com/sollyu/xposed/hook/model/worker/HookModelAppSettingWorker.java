@@ -4,9 +4,14 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.sollyu.xposed.hook.model.R;
 import com.sollyu.xposed.hook.model.activity.HookModelAppSettingActivity;
+import com.sollyu.xposed.hook.model.utils.SystemBarTintManager;
 import com.sollyu.xposed.hook.model.utils.ToolsHelper;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingShortCut;
 
@@ -24,7 +29,26 @@ public class HookModelAppSettingWorker
         HookModelAppSettingWorker.activity = hookModelAppSettingActivity;
         ToolsHelper.TranslucentStatus(activity, "#1958b7");
 
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(false);
+        tintManager.setStatusBarTintColor(android.graphics.Color.parseColor("#1958b7"));
+        tintManager.setNavigationBarTintColor(android.graphics.Color.parseColor("#1958b7"));
+        tintManager.setNavigationBarAlpha(0.5f);
+        activity.getActionBar().setBackgroundDrawable( new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#1958b7")) );
+        activity.getActionBar().setDisplayHomeAsUpEnabled(true);
+
         activity.getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
+    }
+
+    public boolean onMenuItemSelected(int featureId, MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home: activity.finish(); break;
+        }
+
+        return true;
     }
 
     public static class PrefsFragment extends PreferenceFragment
@@ -52,6 +76,14 @@ public class HookModelAppSettingWorker
             // reset summary
             m_hookModelSettingShowSystemAppSwitchPreference.setSummary(HookModelAppListWorker.GetAppSettingString(6));
             m_hookModelSettingsAboutPreference.setSummary(HookModelAppListWorker.GetAppSettingString(10));
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            View view = super.onCreateView(inflater, container, savedInstanceState);
+            view.findViewById(android.R.id.list).setFitsSystemWindows(true);
+            return view;
         }
     }
 }

@@ -8,18 +8,22 @@ android {
         applicationId "com.sollyu.xposed.hook.model"
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 6
-        versionName "1.1.0"
+        versionCode 7
+        versionName "1.1.1"
 
         ndk {
             moduleName "HookModel"
             stl "gnustl_static"
+            cFlags "-std=c++11"
         }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
         }
 
         debug {
@@ -37,5 +41,6 @@ android {
 }
 
 dependencies {
-    provided fileTree(include: ['*.jar'], dir: 'libs')
+    provided fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:21.0.3'
 }

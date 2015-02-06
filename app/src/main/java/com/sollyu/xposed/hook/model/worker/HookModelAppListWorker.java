@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +26,7 @@ import com.sollyu.xposed.hook.model.activity.HookModelAppListAdapter;
 import com.sollyu.xposed.hook.model.activity.HookModelAppSettingActivity;
 import com.sollyu.xposed.hook.model.activity.HookModelAppSettingsActivity;
 import com.sollyu.xposed.hook.model.config.HookModelSettings;
+import com.sollyu.xposed.hook.model.utils.SystemBarTintManager;
 import com.sollyu.xposed.hook.model.utils.ToolsHelper;
 
 import java.util.ArrayList;
@@ -59,7 +61,13 @@ public class HookModelAppListWorker
         activity = hookModelAppListActivity;
         activity.setContentView(R.layout.hook_model_activity_app_list);
 
-        ToolsHelper.TranslucentStatus(activity, "#1958b7");
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(false);
+        tintManager.setStatusBarTintColor(android.graphics.Color.parseColor("#1958b7"));
+        tintManager.setNavigationBarTintColor(android.graphics.Color.parseColor("#1958b7"));
+        tintManager.setNavigationBarAlpha(0.5f);
+        activity.getActionBar().setBackgroundDrawable( new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#1958b7")) );
 
         HookModelAppListWorker.onCreate(activity);
 
@@ -67,6 +75,7 @@ public class HookModelAppListWorker
         searchEditText  = (EditText) activity.findViewById(R.id.etSearch);
         deleteImageView = (ImageView) activity.findViewById(R.id.ivDeleteText);
         appArrayList    = new ArrayList<HashMap<String, Object>>();
+        activity.findViewById(R.id.linearLayout).setFitsSystemWindows(true);
 
         onReloadInstallPackages();
         onRefreshAppList("");
@@ -93,10 +102,11 @@ public class HookModelAppListWorker
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        menu.add(0, 0, 0, HookModelAppListWorker.GetAppListString(7 )).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.add(0, 1, 1, HookModelAppListWorker.GetAppListString(8 )).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.add(0, 2, 2, HookModelAppListWorker.GetAppListString(9 )).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.add(0, 3, 3, HookModelAppListWorker.GetAppListString(10)).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 0, 0, HookModelAppListWorker.GetAppListString(7 )).setIcon(R.drawable.settings).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 1, 1, HookModelAppListWorker.GetAppListString(8 )).setIcon(R.drawable.refresh).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 2, 2, HookModelAppListWorker.GetAppListString(9 )).setIcon(R.drawable.help).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 3, 3, HookModelAppListWorker.GetAppListString(10)).setIcon(R.drawable.about).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 4, 4, HookModelAppListWorker.GetAppListString(18)).setIcon(R.drawable.thumbs_up).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
     }
 
@@ -109,6 +119,7 @@ public class HookModelAppListWorker
             case 1: onRefreshAppList(HookModelAppListWorker.GetAppListString(5)); break;
             case 2: ToolsHelper.OpenUrl(activity, HookModelAppListWorker.GetAppListString(12));break;
             case 3: ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(10), HookModelAppListWorker.GetAppListString(11)); break;
+            case 4: activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=" + activity.getPackageName()))); break;
         }
         return true;
     }
