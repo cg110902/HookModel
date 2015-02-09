@@ -117,12 +117,18 @@ public class HookModelAppListWorker
         switch (id)
         {
             case 0: ToolsHelper.StartActivity(activity, HookModelAppSettingActivity.class); break;
-            case 1: onRefreshAppList(HookModelAppListWorker.GetAppListString(5)); break;
+            case 1: onRefreshAppList(HookModelAppListWorker.GetAppListString(5)); appListAdapter.notifyDataSetChanged(); break;
             case 2: ToolsHelper.OpenUrl(activity, HookModelAppListWorker.GetAppListString(12));break;
             case 3: ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(10), HookModelAppListWorker.GetAppListString(11)); break;
             case 4: activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=" + activity.getPackageName()))); break;
         }
         return true;
+    }
+
+    public void onResume()
+    {
+        onRefreshAppList(HookModelAppListWorker.GetAppListString(5));
+        appListAdapter.notifyDataSetChanged();
     }
 
     public void onRefreshAppList(final String filter)

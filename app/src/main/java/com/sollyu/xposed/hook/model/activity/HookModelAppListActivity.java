@@ -32,4 +32,10 @@ public class HookModelAppListActivity extends Activity {
         return  hookModelAppListWorker.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume()
+    {
+        hookModelAppListWorker.onResume();
+        super.onResume();
+    }
 }
