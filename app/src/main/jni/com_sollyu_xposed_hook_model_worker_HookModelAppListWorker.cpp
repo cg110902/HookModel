@@ -46,7 +46,7 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else if (nIndex == 8) return env->NewStringUTF("刷新");
     else if (nIndex == 9) return env->NewStringUTF("教程");
     else if (nIndex == 10) return env->NewStringUTF("关于");
-    else if (nIndex == 11) return env->NewStringUTF("Copyright © Sollyu 2015\nVersion 1.1.3");
+    else if (nIndex == 11) return env->NewStringUTF("Copyright © Sollyu 2015\nVersion 1.1.4");
     // else if (nIndex == 12) return env->NewStringUTF("http://www.sollyu.com/hook-model/");
     else if (nIndex == 12) return env->NewStringUTF("http://www.cnblogs.com/sollyu/p/4227163.html");
     else if (nIndex == 13) return env->NewStringUTF("com.sollyu.xposed.hook.model");
