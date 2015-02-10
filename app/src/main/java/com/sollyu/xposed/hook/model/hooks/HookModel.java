@@ -51,6 +51,21 @@ public class HookModel implements IXposedHookLoadPackage
             // debug model
             LogString( lpparam.packageName + ":" + pref.getBoolean(lpparam.packageName, false) );
 
+            // set hook successful.
+            if ( lpparam.packageName.equals("com.sollyu.xposed.hook.model") )
+            {
+                Class<?> classModel = XposedHelpers.findClass("com.sollyu.xposed.hook.model.worker.HookModelAppListWorker", lpparam.classLoader);
+                XposedHelpers.findAndHookMethod(classModel, "getIsSuccessHook", new XC_MethodHook()
+                {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable
+                    {
+                        param.setResult(true);
+                        super.afterHookedMethod(param);
+                    }
+                });
+            }
+
             // replace settings.
             if (pref.getBoolean(lpparam.packageName, false))
             {
@@ -64,15 +79,21 @@ public class HookModel implements IXposedHookLoadPackage
 
                 Class<?> classBuild = XposedHelpers.findClass("android.os.Build", lpparam.classLoader);
 
-                XposedHelpers.setStaticObjectField(classBuild, "MANUFACTURER", pref.getString(hookModelManufacutrerKey, android.os.Build.MANUFACTURER));
-                XposedHelpers.setStaticObjectField(classBuild, "MODEL", pref.getString(hookModelModelKey, android.os.Build.MODEL));
+                String saveManufacutrer = pref.getString(hookModelManufacutrerKey, "null");
+                String saveModel        = pref.getString(hookModelModelKey, "null");
+
+                LogString("saveManufacutrer = " + saveManufacutrer);
+                LogString("saveModel        = " + saveModel);
+
+                if (!saveManufacutrer.equals("null") && !saveManufacutrer.equals("")) XposedHelpers.setStaticObjectField(classBuild, "MANUFACTURER", saveManufacutrer);
+                if (!saveModel       .equals("null") && !saveModel       .equals("")) XposedHelpers.setStaticObjectField(classBuild, "MODEL", saveModel);
 
                 // hook advanced
                 if (pref.getBoolean(hookModelAdvancedSwitchKey, false))
                 {
                     Class<?> classTelephonyManager = XposedHelpers.findClass("android.telephony.TelephonyManager", lpparam.classLoader);
                     Class<?> classWifiInfo         = XposedHelpers.findClass("android.net.wifi.WifiInfo", lpparam.classLoader);
-                    Class<?> classSettingsSecure   = XposedHelpers.findClass("android.provider.settings.Secure", lpparam.classLoader);
+                    Class<?> classSettingsSecure   = XposedHelpers.findClass("android.provider.Settings.Secure", lpparam.classLoader);
 
                     XposedHelpers.findAndHookMethod(classTelephonyManager, "getDeviceId", new XC_MethodHook()
                     {
@@ -80,6 +101,8 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedImeiKey, "null");
+                            LogString( "getDeviceId = " + saveValue );
+
                             if (!saveValue.equals("null") && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
@@ -91,6 +114,7 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedSimSerialNumberKey, "null");
+                            LogString( "getSimSerialNumber = " + saveValue );
                             if (!saveValue.equals("null") && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
@@ -102,6 +126,7 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedMacAddressKey, "null");
+                            LogString( "getMacAddress = " + saveValue );
                             if (!saveValue.equals("null") && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
@@ -113,6 +138,7 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedAndroidIdKey, "null");
+                            LogString( "getString = " + saveValue );
                             if (param.args[1].equals("android_id") && !saveValue.equals("null")  && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }

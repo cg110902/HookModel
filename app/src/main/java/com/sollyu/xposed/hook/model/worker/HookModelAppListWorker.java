@@ -94,6 +94,10 @@ public class HookModelAppListWorker
             }, null);
             activity.getSharedPreferences("ModelSettings", Context.MODE_PRIVATE).edit().putBoolean("first_run_app", true).commit();
         }
+        else if (getIsSuccessHook() == false)
+        {
+            ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(17), "您的HOOK好像没有成功，请确定您已经安装Xposed框架并且已经开启本模块\n如果您已经开启，请重启手机重试一下。");
+        }
     }
 
     public void onReloadInstallPackages()
@@ -108,6 +112,7 @@ public class HookModelAppListWorker
         menu.add(0, 2, 2, HookModelAppListWorker.GetAppListString(9 )).setIcon(R.drawable.help).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         menu.add(0, 3, 3, HookModelAppListWorker.GetAppListString(10)).setIcon(R.drawable.about).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         menu.add(0, 4, 4, HookModelAppListWorker.GetAppListString(18)).setIcon(R.drawable.thumbs_up).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 5, 5, HookModelAppListWorker.GetAppListString(19)).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
     }
 
@@ -121,6 +126,7 @@ public class HookModelAppListWorker
             case 2: ToolsHelper.OpenUrl(activity, HookModelAppListWorker.GetAppListString(12));break;
             case 3: ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(10), HookModelAppListWorker.GetAppListString(11)); break;
             case 4: activity.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("market://details?id=" + activity.getPackageName()))); break;
+            case 5: ToolsHelper.OpenUrl(activity, HookModelAppListWorker.GetAppListString(20));break;
         }
         return true;
     }
@@ -156,6 +162,11 @@ public class HookModelAppListWorker
                 }
             }
         }
+    }
+
+    public Boolean getIsSuccessHook()
+    {
+        return false;
     }
 
     private AdapterView.OnItemClickListener onAppListItemClickListener = new AdapterView.OnItemClickListener()
