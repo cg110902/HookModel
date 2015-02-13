@@ -14,7 +14,7 @@ android {
         ndk {
             moduleName "HookModel"
             stl "gnustl_static"
-            cFlags "-std=c++11"
+            cFlags "-std=c++0x"
         }
     }
     buildTypes {
@@ -26,6 +26,10 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ndk {
+                cFlags "-DDEBUG"
+            }
         }
     }
 
