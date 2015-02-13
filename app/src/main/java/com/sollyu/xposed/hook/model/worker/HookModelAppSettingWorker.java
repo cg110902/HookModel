@@ -13,6 +13,8 @@ import com.sollyu.xposed.hook.model.R;
 import com.sollyu.xposed.hook.model.activity.HookModelAppSettingActivity;
 import com.sollyu.xposed.hook.model.utils.SystemBarTintManager;
 import com.sollyu.xposed.hook.model.utils.ToolsHelper;
+import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingEnableLogSystem;
+import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingReportMyModel;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingShortCut;
 
 /**
@@ -23,6 +25,7 @@ public class HookModelAppSettingWorker
     private static HookModelAppSettingActivity activity = null;
     private static Preference       m_hookModelSettingsAboutPreference;
     private static SwitchPreference m_hookModelSettingShowSystemAppSwitchPreference;
+    private static SwitchPreference m_hookModelSettingEnableLogSystem;
 
     public void onCreate(HookModelAppSettingActivity hookModelAppSettingActivity, Bundle savedInstanceState)
     {
@@ -65,6 +68,8 @@ public class HookModelAppSettingWorker
 
             // 注：因开市启桌面图标，所以去掉创建桌面快捷方式
             // m_hookModelSettingsCreateShortCutPreference = new HookModelAppSettingShortCut(this);
+            new HookModelAppSettingEnableLogSystem(this);
+            new HookModelAppSettingReportMyModel(this);
 
             m_hookModelSettingsAboutPreference              = findPreference(HookModelAppListWorker.GetAppSettingString(8));
             m_hookModelSettingShowSystemAppSwitchPreference = (SwitchPreference) findPreference(HookModelAppListWorker.GetAppSettingString(3));

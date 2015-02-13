@@ -3,6 +3,8 @@
 
     <PreferenceCategory android:title="常规设置" >
         <SwitchPreference android:key="hookModelSettingShowSystemApp" />
+        <SwitchPreference android:key="hookModelSettingEnableLogSystem" />
+        <Preference android:key="hookModelSettingReportMyModel" />
         <!--<Preference android:key="hookModelSettingCreateShortCut"/>-->
     </PreferenceCategory>
     

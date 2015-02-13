@@ -17,7 +17,7 @@ namespace android
 
                     std::string loadLabel(jobject packageManager)
                     {
-                        JNIEnv* env = android::jni::JniHelper::GetJniEnv();
+                        JNIEnv* env = android::jni::helper::GetJniEnv();
                         return env->GetStringUTFChars((jstring)env->CallObjectMethod(m_object, env->GetMethodID(env->FindClass("android/content/pm/PackageItemInfo"), "loadLabel", "(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;"), packageManager) , 0);
                     }
             };

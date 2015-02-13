@@ -39,6 +39,14 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
 JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_onCreate
   (JNIEnv *, jclass, jobject);
 
+/*
+ * Class:     com_sollyu_xposed_hook_model_worker_HookModelAppListWorker
+ * Method:    OutputDebugString
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_OutputDebugString
+  (JNIEnv *, jclass, jstring);
+
 #ifdef __cplusplus
 }
 #endif

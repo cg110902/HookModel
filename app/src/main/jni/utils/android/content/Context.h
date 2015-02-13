@@ -17,7 +17,7 @@ namespace android
 
                 android::content::pm::PackageManager getPackageManager()
                 {
-                    JNIEnv* env = android::jni::JniHelper::GetJniEnv();
+                    JNIEnv* env = android::jni::helper::GetJniEnv();
 
                     jclass    ContextClass      = env->FindClass("android/content/Context");
                     jmethodID getPackageManager = env->GetMethodID(ContextClass, "getPackageManager", "()Landroid/content/pm/PackageManager;");
@@ -26,7 +26,7 @@ namespace android
 
                 std::string getPackageName()
                 {
-                    JNIEnv* env = android::jni::JniHelper::GetJniEnv();
+                    JNIEnv* env = android::jni::helper::GetJniEnv();
                     return env->GetStringUTFChars((jstring)env->CallObjectMethod(m_object, env->GetMethodID(env->FindClass("android/content/Context"), "getPackageName", "()Ljava/lang/String;")), 0);
                 }
         };

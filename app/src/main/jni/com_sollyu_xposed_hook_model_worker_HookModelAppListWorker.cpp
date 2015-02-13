@@ -12,7 +12,7 @@
 #include "utils/android/jni/jniHelper.h"
 #include "utils/android/jni/ObjectBase.h"
 
-#define LOG_TAG   "=== TAG ==="
+#define LOG_TAG   "=== HOOK_MODEL ==="
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,151 +36,140 @@ void checkIsModified()
 JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_GetAppListString(JNIEnv *env, jobject entryObject, jint nIndex)
 {
     checkIsModified();
-    if (nIndex == 1) return env->NewStringUTF("icon");
-    else if (nIndex == 2) return env->NewStringUTF("appName");
-    else if (nIndex == 3) return env->NewStringUTF("packageName");
-    else if (nIndex == 4) return env->NewStringUTF("isOpen");
-    else if (nIndex == 5) return env->NewStringUTF("");
-    else if (nIndex == 6) return env->NewStringUTF("hookModelSettingShowSystemApp");
-    else if (nIndex == 7) return env->NewStringUTF("设置");
-    else if (nIndex == 8) return env->NewStringUTF("刷新");
-    else if (nIndex == 9) return env->NewStringUTF("教程");
-    else if (nIndex == 10) return env->NewStringUTF("关于");
-    else if (nIndex == 11) return env->NewStringUTF("Copyright © Sollyu 2015\nVersion 1.1.4");
-    // else if (nIndex == 12) return env->NewStringUTF("http://www.sollyu.com/hook-model/");
-    else if (nIndex == 12) return env->NewStringUTF("http://www.cnblogs.com/sollyu/p/4227163.html");
-    else if (nIndex == 13) return env->NewStringUTF("com.sollyu.xposed.hook.model");
-    else if (nIndex == 14) return env->NewStringUTF("发现您是第一次运行本软件\n是否查看教程");
-    else if (nIndex == 15) return env->NewStringUTF("打开教程");
-    else if (nIndex == 16) return env->NewStringUTF("不，谢谢");
-    else if (nIndex == 17) return env->NewStringUTF("提示");
-    else if (nIndex == 18) return env->NewStringUTF("评分");
-    else if (nIndex == 19) return env->NewStringUTF("测试");
-    else if (nIndex == 20) return env->NewStringUTF("http://www.400gb.com/file/84880260");
-    else return env->NewStringUTF("null");
+    if (nIndex == 1) return android::jni::helper::StringToJstring("icon");
+    else if (nIndex == 2) return android::jni::helper::StringToJstring("appName");
+    else if (nIndex == 3) return android::jni::helper::StringToJstring("packageName");
+    else if (nIndex == 4) return android::jni::helper::StringToJstring("isOpen");
+    else if (nIndex == 5) return android::jni::helper::StringToJstring("");
+    else if (nIndex == 6) return android::jni::helper::StringToJstring("hookModelSettingShowSystemApp");
+    else if (nIndex == 7) return android::jni::helper::StringToJstring("设置");
+    else if (nIndex == 8) return android::jni::helper::StringToJstring("刷新");
+    else if (nIndex == 9) return android::jni::helper::StringToJstring("教程");
+    else if (nIndex == 10) return android::jni::helper::StringToJstring("关于");
+    else if (nIndex == 11) return android::jni::helper::StringToJstring("Copyright © Sollyu 2015\nVersion 1.1.4");
+    else if (nIndex == 12) return android::jni::helper::StringToJstring("http://www.sollyu.com/hook-model/");
+    else if (nIndex == 13) return android::jni::helper::StringToJstring("com.sollyu.xposed.hook.model");
+    else if (nIndex == 14) return android::jni::helper::StringToJstring("发现您是第一次运行本软件\n是否查看教程");
+    else if (nIndex == 15) return android::jni::helper::StringToJstring("打开教程");
+    else if (nIndex == 16) return android::jni::helper::StringToJstring("不，谢谢");
+    else if (nIndex == 17) return android::jni::helper::StringToJstring("提示");
+    else if (nIndex == 18) return android::jni::helper::StringToJstring("评分");
+    else if (nIndex == 19) return android::jni::helper::StringToJstring("测试");
+    else if (nIndex == 20) return android::jni::helper::StringToJstring("http://www.400gb.com/file/84880260");
+    else if (nIndex == 21) return android::jni::helper::StringToJstring("您的伪装似乎并没有成功\n"
+                                                                        "请确定您已经安装Xposed框架\n"
+                                                                        "且已经在Xposed中开启本模块\n"
+                                                                        "如果开启请重启手机重试一下");
+    else return android::jni::helper::StringToJstring("null");
 }
 
 JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_GetAppSettingsString(JNIEnv *env, jclass entryObject, jint nIndex)
 {
     checkIsModified();
-    if (nIndex == 1) return env->NewStringUTF(".hookModelManufacutrer");
-    else if (nIndex == 2) return env->NewStringUTF(".hookModelModel");
-    else if (nIndex == 3) return env->NewStringUTF(".hookModelAdvanced");
-    else if (nIndex == 4) return env->NewStringUTF(".hookModelAdvancedImei");
-    else if (nIndex == 5) return env->NewStringUTF(".hookModelAdvancedSimSerialNumber");
-    else if (nIndex == 6) return env->NewStringUTF("hookModelOpenHookSwitch");
-    else if (nIndex == 7) return env->NewStringUTF("hookModelManufacutrer");
-    else if (nIndex == 8) return env->NewStringUTF("hookModelAdvancedImei");
-    else if (nIndex == 9) return env->NewStringUTF("hookModelModel");
-    else if (nIndex == 10) return env->NewStringUTF("hookModelAdvancedSimSerialNumber");
-    else if (nIndex == 11) return env->NewStringUTF("hookModelAdvancedSwitch");
-    else if (nIndex == 12) return env->NewStringUTF("hookModelAppInfo");
-    else if (nIndex == 13) return env->NewStringUTF("hookModelSelectModels");
-    else if (nIndex == 14) return env->NewStringUTF("manufacturer");
-    else if (nIndex == 15) return env->NewStringUTF("model");
-    else if (nIndex == 16) return env->NewStringUTF("伪装一个别家的手机厂商");
-    else if (nIndex == 17) return env->NewStringUTF("伪装一个IMEI手机串号");
-    else if (nIndex == 18) return env->NewStringUTF("伪装一个别家的手机型号");
-    else if (nIndex == 19) return env->NewStringUTF("伪装SIM卡序列号");
-    else if (nIndex == 20) return env->NewStringUTF("选择厂商");
-    else if (nIndex == 21) return env->NewStringUTF("选择型号");
-    else if (nIndex == 22) return env->NewStringUTF("厂商伪装");
-    else if (nIndex == 23) return env->NewStringUTF("型号伪装");
-    else if (nIndex == 24) return env->NewStringUTF("再次点击将会重新打开应用");
-    else if (nIndex == 25) return env->NewStringUTF("高级伪装");
-    else if (nIndex == 26) return env->NewStringUTF("对此软件获得信息进行高级伪装");
-    else if (nIndex == 27) return env->NewStringUTF("选择一市面上常用的机型进行伪装");
-    else if (nIndex == 28) return env->NewStringUTF("{\"小米\":{\"小米1\":{\"manufacturer\":\"Xiaomi\",\"model\":\"2013022\"},\"小米1s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI-ONE Plus\"},\"小米2\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2\"},\"小米2s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2s\"},\"小米3\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 3\"},\"小米4 4G版\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI 4LTE\"},\"红米\":{\"manufacturer\":\"Xiaomi\",\"model\":\"HM NOTE 1TD\"}},\"魅族\":{\"MX2\":{\"manufacturer\":\"M040\",\"model\":\"meizu\"},\"MX3\":{\"manufacturer\":\"meizu\",\"model\":\"M353\"},\"MX4\":{\"manufacturer\":\"meizu\",\"model\":\"MX4\"},\"MX4 Pro\":{\"manufacturer\":\"meizu\",\"model\":\"MX4 Pro\"},\"魅蓝\":{\"manufacturer\":\"meizu\",\"model\":\"m1 note\"}},\"三星\":{\"Galaxy Nexus\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy Nexus\"},\"Galaxy S5\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy S5\"},\"GALAXY S IV\":{\"manufacturer\":\"samsung\",\"model\":\"GT-I9500\"}},\"iРhone(P为特殊字符)\":{\"4\":{\"manufacturer\":\"iРhone\",\"model\":\"4\"},\"5\":{\"manufacturer\":\"iРhone\",\"model\":\"5\"},\"6\":{\"manufacturer\":\"iРhone\",\"model\":\"6\"},\"4s\":{\"manufacturer\":\"iРhone\",\"model\":\"4s\"},\"5s\":{\"manufacturer\":\"iРhone\",\"model\":\"5s\"},\"5c\":{\"manufacturer\":\"iРhone\",\"model\":\"5c\"},\"6 Plus\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus\"},\"土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"土豪金\"},\"6 Plus 土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 土豪金\"},\"6 Plus 镶钻版\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 镶钻版\"}},\"其它\":{\"我的手机 你买不到\":{\"manufacturer\":\"我的手机\",\"model\":\"你买不到\"},\"这破手机 不要也罢\":{\"manufacturer\":\"这破手机\",\"model\":\"不要也罢\"},\"手机型号 回复可见\":{\"manufacturer\":\"手机型号\",\"model\":\"回复可见\"}}}");
-    else if (nIndex == 29) return env->NewStringUTF(".hookModelAdvancedMacAddress");
-    else if (nIndex == 30) return env->NewStringUTF("hookModelAdvancedMacAddress");
-    else if (nIndex == 31) return env->NewStringUTF("伪装Mac地址");
-    else if (nIndex == 32) return env->NewStringUTF("伪装成另一个Mac地址");
-    else if (nIndex == 33) return env->NewStringUTF("对此程序进行伪装");
-    else if (nIndex == 34) return env->NewStringUTF("串号伪装");
-    else if (nIndex == 35) return env->NewStringUTF("SIM卡号伪装");
-    else if (nIndex == 36) return env->NewStringUTF(".hookModelAdvancedAndroidId");
-    else if (nIndex == 37) return env->NewStringUTF("hookModelAdvancedAndroidId");
-    else if (nIndex == 38) return env->NewStringUTF("伪装一个Android ID");
-    else if (nIndex == 39) return env->NewStringUTF("伪装Android ID");
-    else if (nIndex == 40) return env->NewStringUTF("随机");
+    if (nIndex == 1) return android::jni::helper::StringToJstring(".hookModelManufacutrer");
+    else if (nIndex == 2) return android::jni::helper::StringToJstring(".hookModelModel");
+    else if (nIndex == 3) return android::jni::helper::StringToJstring(".hookModelAdvanced");
+    else if (nIndex == 4) return android::jni::helper::StringToJstring(".hookModelAdvancedImei");
+    else if (nIndex == 5) return android::jni::helper::StringToJstring(".hookModelAdvancedSimSerialNumber");
+    else if (nIndex == 6) return android::jni::helper::StringToJstring("hookModelOpenHookSwitch");
+    else if (nIndex == 7) return android::jni::helper::StringToJstring("hookModelManufacutrer");
+    else if (nIndex == 8) return android::jni::helper::StringToJstring("hookModelAdvancedImei");
+    else if (nIndex == 9) return android::jni::helper::StringToJstring("hookModelModel");
+    else if (nIndex == 10) return android::jni::helper::StringToJstring("hookModelAdvancedSimSerialNumber");
+    else if (nIndex == 11) return android::jni::helper::StringToJstring("hookModelAdvancedSwitch");
+    else if (nIndex == 12) return android::jni::helper::StringToJstring("hookModelAppInfo");
+    else if (nIndex == 13) return android::jni::helper::StringToJstring("hookModelSelectModels");
+    else if (nIndex == 14) return android::jni::helper::StringToJstring("manufacturer");
+    else if (nIndex == 15) return android::jni::helper::StringToJstring("model");
+    else if (nIndex == 16) return android::jni::helper::StringToJstring("伪装一个别家的手机厂商");
+    else if (nIndex == 17) return android::jni::helper::StringToJstring("伪装一个IMEI手机串号");
+    else if (nIndex == 18) return android::jni::helper::StringToJstring("伪装一个别家的手机型号");
+    else if (nIndex == 19) return android::jni::helper::StringToJstring("伪装SIM卡序列号");
+    else if (nIndex == 20) return android::jni::helper::StringToJstring("选择厂商");
+    else if (nIndex == 21) return android::jni::helper::StringToJstring("选择型号");
+    else if (nIndex == 22) return android::jni::helper::StringToJstring("厂商伪装");
+    else if (nIndex == 23) return android::jni::helper::StringToJstring("型号伪装");
+    else if (nIndex == 24) return android::jni::helper::StringToJstring("再次点击将会重新打开应用");
+    else if (nIndex == 25) return android::jni::helper::StringToJstring("高级伪装");
+    else if (nIndex == 26) return android::jni::helper::StringToJstring("对此软件获得信息进行高级伪装");
+    else if (nIndex == 27) return android::jni::helper::StringToJstring("选择一市面上常用的机型进行伪装");
+    else if (nIndex == 28) return android::jni::helper::StringToJstring("{\"小米\":{\"小米1\":{\"manufacturer\":\"Xiaomi\",\"model\":\"2013022\"},\"小米1s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI-ONE Plus\"},\"小米2\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2\"},\"小米2s\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 2s\"},\"小米3\":{\"manufacturer\":\"Xiaomi\",\"model\":\"mi 3\"},\"小米4 4G版\":{\"manufacturer\":\"Xiaomi\",\"model\":\"MI 4LTE\"},\"红米\":{\"manufacturer\":\"Xiaomi\",\"model\":\"HM NOTE 1TD\"}},\"魅族\":{\"MX2\":{\"manufacturer\":\"M040\",\"model\":\"meizu\"},\"MX3\":{\"manufacturer\":\"meizu\",\"model\":\"M353\"},\"MX4\":{\"manufacturer\":\"meizu\",\"model\":\"MX4\"},\"MX4 Pro\":{\"manufacturer\":\"meizu\",\"model\":\"MX4 Pro\"},\"魅蓝\":{\"manufacturer\":\"meizu\",\"model\":\"m1 note\"}},\"三星\":{\"Galaxy Nexus\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy Nexus\"},\"Galaxy S5\":{\"manufacturer\":\"samsung\",\"model\":\"Galaxy S5\"},\"GALAXY S IV\":{\"manufacturer\":\"samsung\",\"model\":\"GT-I9500\"}},\"iРhone(P为特殊字符)\":{\"4\":{\"manufacturer\":\"iРhone\",\"model\":\"4\"},\"5\":{\"manufacturer\":\"iРhone\",\"model\":\"5\"},\"6\":{\"manufacturer\":\"iРhone\",\"model\":\"6\"},\"4s\":{\"manufacturer\":\"iРhone\",\"model\":\"4s\"},\"5s\":{\"manufacturer\":\"iРhone\",\"model\":\"5s\"},\"5c\":{\"manufacturer\":\"iРhone\",\"model\":\"5c\"},\"6 Plus\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus\"},\"土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"土豪金\"},\"6 Plus 土豪金\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 土豪金\"},\"6 Plus 镶钻版\":{\"manufacturer\":\"iРhone\",\"model\":\"6 Рlus 镶钻版\"}},\"其它\":{\"我的手机 你买不到\":{\"manufacturer\":\"我的手机\",\"model\":\"你买不到\"},\"这破手机 不要也罢\":{\"manufacturer\":\"这破手机\",\"model\":\"不要也罢\"},\"手机型号 回复可见\":{\"manufacturer\":\"手机型号\",\"model\":\"回复可见\"}}}");
+    else if (nIndex == 29) return android::jni::helper::StringToJstring(".hookModelAdvancedMacAddress");
+    else if (nIndex == 30) return android::jni::helper::StringToJstring("hookModelAdvancedMacAddress");
+    else if (nIndex == 31) return android::jni::helper::StringToJstring("伪装Mac地址");
+    else if (nIndex == 32) return android::jni::helper::StringToJstring("伪装成另一个Mac地址");
+    else if (nIndex == 33) return android::jni::helper::StringToJstring("对此程序进行伪装");
+    else if (nIndex == 34) return android::jni::helper::StringToJstring("串号伪装");
+    else if (nIndex == 35) return android::jni::helper::StringToJstring("SIM卡号伪装");
+    else if (nIndex == 36) return android::jni::helper::StringToJstring(".hookModelAdvancedAndroidId");
+    else if (nIndex == 37) return android::jni::helper::StringToJstring("hookModelAdvancedAndroidId");
+    else if (nIndex == 38) return android::jni::helper::StringToJstring("伪装一个Android ID");
+    else if (nIndex == 39) return android::jni::helper::StringToJstring("伪装Android ID");
+    else if (nIndex == 40) return android::jni::helper::StringToJstring("随机");
 
-    else return env->NewStringUTF("null");
+    else return android::jni::helper::StringToJstring("null");
 }
 
 JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_GetAppSettingString(JNIEnv * env, jclass, jint nIndex)
 {
     checkIsModified();
-    if (nIndex == 1) return env->NewStringUTF("ModelSettings");
-    else if (nIndex == 2) return env->NewStringUTF("hookModelSettingCreateShortCut");
-    else if (nIndex == 3) return env->NewStringUTF("hookModelSettingShowSystemApp");
-    else if (nIndex == 4) return env->NewStringUTF("显示系统应用");
-    else if (nIndex == 5) return env->NewStringUTF("创建快捷方式");
-    else if (nIndex == 6) return env->NewStringUTF("将系统应用也显示在列表中");
-    else if (nIndex == 7) return env->NewStringUTF("在桌面创建一个快捷方式");
-    else if (nIndex == 8) return env->NewStringUTF("hookModelSettingAbout");
-    else if (nIndex == 9) return env->NewStringUTF("作者：King.Sollyu");
-    else if (nIndex == 10) return env->NewStringUTF("说明：本软件需要依赖xposed或者wsm");
-    else return env->NewStringUTF("null");
+    if (nIndex == 1) return android::jni::helper::StringToJstring("ModelSettings");
+    else if (nIndex == 2) return android::jni::helper::StringToJstring("hookModelSettingCreateShortCut");
+    else if (nIndex == 3) return android::jni::helper::StringToJstring("hookModelSettingShowSystemApp");
+    else if (nIndex == 4) return android::jni::helper::StringToJstring("显示系统应用");
+    else if (nIndex == 5) return android::jni::helper::StringToJstring("创建快捷方式");
+    else if (nIndex == 6) return android::jni::helper::StringToJstring("将系统应用也显示在列表中");
+    else if (nIndex == 7) return android::jni::helper::StringToJstring("在桌面创建一个快捷方式");
+    else if (nIndex == 8) return android::jni::helper::StringToJstring("hookModelSettingAbout");
+    else if (nIndex == 9) return android::jni::helper::StringToJstring("作者：King.Sollyu");
+    else if (nIndex == 10) return android::jni::helper::StringToJstring("说明：本软件需要依赖xposed或者wsm");
+    else if (nIndex == 11) return android::jni::helper::StringToJstring("hookModelSettingEnableLogSystem");
+    else if (nIndex == 12) return android::jni::helper::StringToJstring("记录程序中的一些日志");
+    else if (nIndex == 13) return android::jni::helper::StringToJstring("日志");
+    else if (nIndex == 14) return android::jni::helper::StringToJstring("hookModelSettingReportMyModel");
+    else if (nIndex == 15) return android::jni::helper::StringToJstring("把您的手机型号共享给别人");
+    else if (nIndex == 16) return android::jni::helper::StringToJstring("提交机型");
+    else if (nIndex == 17) return android::jni::helper::StringToJstring("http://image.4sql.net/soft/hook-model/report_model.php");
+    else return android::jni::helper::StringToJstring("null");
 }
 
 jstring GetApplicationMetaData(JNIEnv *env, jobject context, jstring key)
 {
-    jclass cls_Context           = env->FindClass("android/content/Context");
-    jclass PackageManager        = env->FindClass("android/content/pm/PackageManager");
-    jclass PackageItemInfo       = env->FindClass("android/content/pm/PackageItemInfo");
-    jclass Bundle                = env->FindClass("android/os/Bundle");
-
-    jmethodID getPackageName     = env->GetMethodID(cls_Context    , "getPackageName"     , "()Ljava/lang/String;");
-    jmethodID getPackageManager  = env->GetMethodID(cls_Context    , "getPackageManager"  , "()Landroid/content/pm/PackageManager;");
-    jmethodID getApplicationInfo = env->GetMethodID(PackageManager , "getApplicationInfo" , "(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;");
-    jmethodID loadLabel          = env->GetMethodID(PackageItemInfo, "loadLabel"          , "(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;");
-    jmethodID getString          = env->GetMethodID(Bundle         , "getString"          , "(Ljava/lang/String;)Ljava/lang/String;");
-
-    jfieldID imp_metaData        = env->GetFieldID(PackageItemInfo, "metaData", "Landroid/os/Bundle;");
-
-    jstring str_packageName      = (jstring)env->CallObjectMethod(context, getPackageName);
-
-    jobject pm = env->CallObjectMethod(context, getPackageManager);
-    jobject in = env->CallObjectMethod(pm, getApplicationInfo, str_packageName, 0x80);
-
-    jobject metaData    = env->GetObjectField(in, imp_metaData);
-    jstring metaDataKey = (jstring)env->CallObjectMethod(metaData, getString, key);
+    jstring str_packageName      = android::jni::helper::CallObjectMethod<jstring>( context        , "android/content/Context"           , "getPackageName"    , "()Ljava/lang/String;" );
+    jobject packageManager       = android::jni::helper::CallObjectMethod<jobject>( context        , "android/content/Context"           , "getPackageManager" , "()Landroid/content/pm/PackageManager;");
+    jobject applicationInfo      = android::jni::helper::CallObjectMethod<jobject>( packageManager , "android/content/pm/PackageManager" , "getApplicationInfo", "(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;", str_packageName, 0x80);
+    jobject metaData             = android::jni::helper::GetObjectField  <jobject>( applicationInfo, "android/content/pm/PackageItemInfo", "metaData"          , "Landroid/os/Bundle;");
+    jstring metaDataKey          = android::jni::helper::CallObjectMethod<jstring>( metaData       , "android/os/Bundle"                 , "getString"         , "(Ljava/lang/String;)Ljava/lang/String;", key);
 
     return metaDataKey;
 }
 
 JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_onCreate(JNIEnv * env, jclass , jobject context)
 {
-    android::jni::JniHelper::Init(env);
-    android::content::Context ccc(context);
-    android::content::pm::ApplicationInfo applicationInfo = ccc.getPackageManager().getApplicationInfo(ccc.getPackageName(), 0);
+    android::jni::helper::Init(env);
 
-    jclass cls_Context           = env->FindClass("android/content/Context");
-    jclass PackageManager        = env->FindClass("android/content/pm/PackageManager");
-    jclass PackageItemInfo       = env->FindClass("android/content/pm/PackageItemInfo");
+    jstring str_packageName      = android::jni::helper::CallObjectMethod<jstring>( context        , "android/content/Context"           , "getPackageName"    , "()Ljava/lang/String;" );
+    jobject packageManager       = android::jni::helper::CallObjectMethod<jobject>( context        , "android/content/Context"           , "getPackageManager" , "()Landroid/content/pm/PackageManager;");
+    jobject applicationInfo      = android::jni::helper::CallObjectMethod<jobject>( packageManager , "android/content/pm/PackageManager" , "getApplicationInfo", "(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;", str_packageName);
+    jstring str_appLabel         = android::jni::helper::CallObjectMethod<jstring>( applicationInfo, "android/content/pm/ApplicationInfo", "loadLabel"         , "(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;", packageManager );
 
-    jmethodID getPackageName     = env->GetMethodID(cls_Context,    "getPackageName",     "()Ljava/lang/String;");
-    jmethodID getPackageManager  = env->GetMethodID(cls_Context,    "getPackageManager",  "()Landroid/content/pm/PackageManager;");
-    jmethodID getApplicationInfo = env->GetMethodID(PackageManager, "getApplicationInfo", "(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;");
-    jmethodID loadLabel          = env->GetMethodID(PackageItemInfo, "loadLabel",         "(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;");
+    jstring key = android::jni::helper::StringToJstring("xposeddescription");
 
-    jstring str_packageName      = (jstring)env->CallObjectMethod(context, getPackageName);
+    std::string szPackageName    = android::jni::helper::JstringToString(str_packageName);
+    std::string szAppLabel       = android::jni::helper::JstringToString(str_appLabel   );
+    std::string szAppDes         = android::jni::helper::JstringToString(GetApplicationMetaData(env, context, key));
 
-    jobject pm = env->CallObjectMethod(context, getPackageManager);
-    jobject in = env->CallObjectMethod(pm, getApplicationInfo, str_packageName, 0);
-
-    jstring str_appLabel         = (jstring)env->CallObjectMethod(in, loadLabel, pm);
-
-    jstring key = env->NewStringUTF("xposeddescription");
-
-    const char *szPackageName    = env->GetStringUTFChars(str_packageName, 0);
-    const char *szAppLabel       = env->GetStringUTFChars(str_appLabel, 0);
-    const char *szAppDes         = env->GetStringUTFChars(GetApplicationMetaData(env, context, key), 0);
-
-    if (strcmp(szPackageName, "com.sollyu.xposed.hook.model") == 0 && strcmp(szAppLabel, "型号伪装") == 0 && strcmp(szAppDes, "这个可以伪装手机软件显示的手机型号") == 0 )
+    if (szPackageName == "com.sollyu.xposed.hook.model" && szAppLabel == "型号伪装" && szAppDes == "这个可以伪装手机软件显示的手机型号" )
     {
         isModified = false;
     }
+}
+
+JNIEXPORT void JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppListWorker_OutputDebugString(JNIEnv *, jclass, jstring s)
+{
+#ifdef DEBUG
+    android::util::Log::d(LOG_TAG, android::jni::helper::JstringToString( s ));
+#endif
 }
 
 #ifdef __cplusplus

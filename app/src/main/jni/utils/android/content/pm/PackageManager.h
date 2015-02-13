@@ -18,7 +18,7 @@ namespace android
 
                     ApplicationInfo getApplicationInfo(std::string s, int i)
                     {
-                        JNIEnv* env = android::jni::JniHelper::GetJniEnv();
+                        JNIEnv* env = android::jni::helper::GetJniEnv();
                         return  ApplicationInfo(env->CallObjectMethod(m_object, env->GetMethodID(env->FindClass("android/content/pm/PackageManager"), "getApplicationInfo", "(Ljava/lang/String;I)Landroid/content/pm/ApplicationInfo;"), env->NewStringUTF(s.c_str()), i));
                     }
             };

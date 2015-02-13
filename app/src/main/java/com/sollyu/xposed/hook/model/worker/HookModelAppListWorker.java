@@ -51,6 +51,7 @@ public class HookModelAppListWorker
     public static native String GetAppSettingsString(int nIndex);
     public static native String GetAppSettingString(int nIndex);
     public static native String onCreate(Context context);
+    public static native void   OutputDebugString(String str);
 
     static { System.loadLibrary("HookModel");}
 
@@ -64,7 +65,6 @@ public class HookModelAppListWorker
         tintManager.setNavigationBarTintEnabled(false);
         tintManager.setStatusBarTintColor(android.graphics.Color.parseColor("#1958b7"));
         tintManager.setNavigationBarTintColor(android.graphics.Color.parseColor("#1958b7"));
-        tintManager.setNavigationBarAlpha(0.5f);
         activity.getActionBar().setBackgroundDrawable( new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#1958b7")) );
 
         HookModelAppListWorker.onCreate(activity);
@@ -96,7 +96,7 @@ public class HookModelAppListWorker
         }
         else if (getIsSuccessHook() == false)
         {
-            ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(17), "您的HOOK好像没有成功，请确定您已经安装Xposed框架并且已经开启本模块\n如果您已经开启，请重启手机重试一下。");
+            ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(17), HookModelAppListWorker.GetAppListString(21));
         }
     }
 

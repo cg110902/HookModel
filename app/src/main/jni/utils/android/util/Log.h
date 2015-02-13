@@ -12,9 +12,6 @@ namespace android
         class Log
         {
             public:
-                enum {VERBOSE = 2, DEBUG = 3, INFO = 4, WARN = 5, ERROR = 6, ASSERT = 7};
-
-            public:
                 static int v(std::string tag, std::string msg)   { return CallMethod(tag, msg, "v"  ); }
                 static int d(std::string tag, std::string msg)   { return CallMethod(tag, msg, "d"  ); }
                 static int i(std::string tag, std::string msg)   { return CallMethod(tag, msg, "i"  ); }
@@ -25,7 +22,7 @@ namespace android
             private:
                 static int CallMethod(std::string tag, std::string msg, std::string szMethod)
                 {
-                    JNIEnv* env = android::jni::JniHelper::GetJniEnv();
+                    JNIEnv* env = android::jni::helper::GetJniEnv();
                     jstring jTag = env->NewStringUTF(tag.c_str());
                     jstring jMsg = env->NewStringUTF(msg.c_str());
 

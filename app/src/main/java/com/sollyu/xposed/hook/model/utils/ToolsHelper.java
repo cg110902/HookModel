@@ -206,4 +206,25 @@ public class ToolsHelper
         }
         return  randomString;
     }
+
+    public static String GetHtml(String Url) throws Exception
+    {
+        java.net.URL url = new java.net.URL(Url);
+        java.net.HttpURLConnection conn = (java.net.HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setConnectTimeout(5 * 1000);
+
+        java.io.InputStream inStream = conn.getInputStream();
+
+        java.io.ByteArrayOutputStream outStream = new java.io.ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        while ((len = inStream.read(buffer)) != -1)
+            outStream.write(buffer, 0, len);
+
+        inStream.close();
+
+        String html = new String(outStream.toByteArray());
+        return html;
+    }
 }

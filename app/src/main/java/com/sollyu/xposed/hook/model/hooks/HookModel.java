@@ -7,31 +7,33 @@ import java.io.File;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class HookModel implements IXposedHookLoadPackage
 {
-    public static Boolean DEBUG_MODEL = false;
     public static String LOG_TAG = "=== MODEL_HOOK ===";
     public static XSharedPreferences pref = null;
 
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable
     {
-         try
+        try
         {
             int nTryCount = 0;
             File file = new File(Environment.getDataDirectory(), "data/com.sollyu.xposed.hook.model/shared_prefs/com.sollyu.xposed.hook.model_preferences.xml");
             while ( pref == null && nTryCount++ < 10 && !file.exists() )
             {
                 file = new File(Environment.getDataDirectory(), "data/com.sollyu.xposed.hook.model/shared_prefs/com.sollyu.xposed.hook.model_preferences.xml");
-                LogString("try load :" + file.getAbsolutePath());
                 Thread.sleep(100);
             }
 
             if (nTryCount == 10)
             {
-                LogString("NOT FOUNT : " + file.getAbsolutePath());
+                LogString("======================型号伪装 - 日志开始=======================");
+                LogString("没有发现配置文件 : " + file.getAbsolutePath());
+                LogString("打开一次“型号伪装”即可解决");
+                LogString("======================型号伪装 - 日志结束=======================");
                 return;
             }
 
@@ -43,13 +45,9 @@ public class HookModel implements IXposedHookLoadPackage
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable
                 {
-                    LogString(param.getClass().toString() + " : === pref.reload() ===");
                     pref.reload();
                 }
             });
-
-            // debug model
-            LogString( lpparam.packageName + ":" + pref.getBoolean(lpparam.packageName, false) );
 
             // set hook successful.
             if ( lpparam.packageName.equals("com.sollyu.xposed.hook.model") )
@@ -82,9 +80,6 @@ public class HookModel implements IXposedHookLoadPackage
                 String saveManufacutrer = pref.getString(hookModelManufacutrerKey, "null");
                 String saveModel        = pref.getString(hookModelModelKey, "null");
 
-                LogString("saveManufacutrer = " + saveManufacutrer);
-                LogString("saveModel        = " + saveModel);
-
                 if (!saveManufacutrer.equals("null") && !saveManufacutrer.equals("")) XposedHelpers.setStaticObjectField(classBuild, "MANUFACTURER", saveManufacutrer);
                 if (!saveModel       .equals("null") && !saveModel       .equals("")) XposedHelpers.setStaticObjectField(classBuild, "MODEL", saveModel);
 
@@ -101,8 +96,6 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedImeiKey, "null");
-                            LogString( "getDeviceId = " + saveValue );
-
                             if (!saveValue.equals("null") && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
@@ -114,7 +107,6 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedSimSerialNumberKey, "null");
-                            LogString( "getSimSerialNumber = " + saveValue );
                             if (!saveValue.equals("null") && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
@@ -126,7 +118,6 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedMacAddressKey, "null");
-                            LogString( "getMacAddress = " + saveValue );
                             if (!saveValue.equals("null") && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
@@ -138,7 +129,6 @@ public class HookModel implements IXposedHookLoadPackage
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable
                         {
                             String saveValue = pref.getString(hookModelAdvancedAndroidIdKey, "null");
-                            LogString( "getString = " + saveValue );
                             if (param.args[1].equals("android_id") && !saveValue.equals("null")  && !saveValue.equals("")) param.setResult(saveValue);
                             super.afterHookedMethod(param);
                         }
@@ -148,16 +138,35 @@ public class HookModel implements IXposedHookLoadPackage
         }
         catch (Exception e)
         {
+            LogString("======================型号伪装 - 日志开始=======================");
+            LogString("!! 程序异常 !! 如果有需要, 请联系作者QQ: 191067617");
             LogString(e.toString());
+            LogString("======================型号伪装 - 日志结束=======================");
         }
     }
 
     public void LogString(Object log)
     {
-        if (DEBUG_MODEL)
+        try
         {
-            android.util.Log.e(LOG_TAG, log.toString());
-            // XposedBridge.log(log);
+            File file = new File(Environment.getDataDirectory(), "data/com.sollyu.xposed.hook.model/shared_prefs/ModelSettings.xml");
+            XSharedPreferences settingPref = new XSharedPreferences(file);
+            if (settingPref.getBoolean("hookModelSettingEnableLogSystem", false))
+            {
+                android.util.Log.d(LOG_TAG, log.toString());
+                XposedBridge.log(log.toString());
+            }
+        }
+        catch (Exception e)
+        {
+            android.util.Log.e(LOG_TAG, "======================型号伪装 - 日志开始=======================");
+            XposedBridge.log(           "======================型号伪装 - 日志开始=======================");
+
+            android.util.Log.e(LOG_TAG, e.toString());
+            XposedBridge.log(e.toString());
+
+            android.util.Log.e(LOG_TAG, "======================型号伪装 - 日志结束=======================");
+            XposedBridge.log(           "======================型号伪装 - 日志结束=======================");
         }
     }
 }
