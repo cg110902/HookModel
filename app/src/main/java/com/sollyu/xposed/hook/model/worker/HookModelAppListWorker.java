@@ -26,6 +26,7 @@ import com.sollyu.xposed.hook.model.activity.HookModelAppSettingsActivity;
 import com.sollyu.xposed.hook.model.config.HookModelSettings;
 import com.sollyu.xposed.hook.model.utils.SystemBarTintManager;
 import com.sollyu.xposed.hook.model.utils.ToolsHelper;
+import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingUpdate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,6 +99,8 @@ public class HookModelAppListWorker
         {
             ToolsHelper.ShowAlertDialogOk(activity, HookModelAppListWorker.GetAppListString(17), HookModelAppListWorker.GetAppListString(21));
         }
+
+        HookModelAppSettingUpdate.CheckUpdate(activity, false);
     }
 
     public void onReloadInstallPackages()

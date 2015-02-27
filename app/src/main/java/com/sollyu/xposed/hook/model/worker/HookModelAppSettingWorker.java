@@ -16,6 +16,8 @@ import com.sollyu.xposed.hook.model.utils.ToolsHelper;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingEnableLogSystem;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingReportMyModel;
 import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingShortCut;
+import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingUpdate;
+import com.sollyu.xposed.hook.model.worker.HookModelAppSettingItem.HookModelAppSettingUpdateRemoteModel;
 
 /**
  * Created by wangsy on 15/1/30.
@@ -70,6 +72,8 @@ public class HookModelAppSettingWorker
             // m_hookModelSettingsCreateShortCutPreference = new HookModelAppSettingShortCut(this);
             new HookModelAppSettingEnableLogSystem(this);
             new HookModelAppSettingReportMyModel(this);
+            new HookModelAppSettingUpdateRemoteModel(this);
+            new HookModelAppSettingUpdate(this);
 
             m_hookModelSettingsAboutPreference              = findPreference(HookModelAppListWorker.GetAppSettingString(8));
             m_hookModelSettingShowSystemAppSwitchPreference = (SwitchPreference) findPreference(HookModelAppListWorker.GetAppSettingString(3));

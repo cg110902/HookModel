@@ -27,6 +27,7 @@ import com.sollyu.xposed.hook.model.worker.HookModelAppSettingsItem.HookModelApp
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.util.Iterator;
 
 /**
@@ -175,9 +176,26 @@ public class HookModelAppSettingsWorker
             @Override
             public boolean onPreferenceClick(Preference arg0)
             {
+
+                String json = "";
+
                 try
                 {
-                    final JSONObject result = new JSONObject(HookModelAppListWorker.GetAppSettingsString(28));
+                    FileInputStream fileInputStream = activity.openFileInput("share_model.json");
+                    byte[] s = new byte[fileInputStream.available()];
+                    fileInputStream.read(s);
+                    fileInputStream.close();
+
+                    json = new String(s);
+                } catch (Exception e)
+                {
+                    json = HookModelAppListWorker.GetAppSettingsString(28);
+                }
+
+
+                try
+                {
+                    final JSONObject result = new JSONObject(json);
                     final String[] arrayFruit = new String[result.length()];
 
                     int i = 0;
@@ -227,7 +245,7 @@ public class HookModelAppSettingsWorker
                     });
                     manufacturerBuilder.create().show();
                 }
-                catch (JSONException e)
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }

@@ -4,11 +4,13 @@
     <PreferenceCategory android:title="常规设置" >
         <SwitchPreference android:key="hookModelSettingShowSystemApp" />
         <SwitchPreference android:key="hookModelSettingEnableLogSystem" />
+        <Preference android:key="hookModelSettingUpdateRemoteModel" />
         <Preference android:key="hookModelSettingReportMyModel" />
         <!--<Preference android:key="hookModelSettingCreateShortCut"/>-->
     </PreferenceCategory>
     
     <PreferenceCategory android:title="关于" >
+        <Preference android:key="hookModelSettingUpdate" android:enabled="true"/>
         <Preference android:key="hookModelSettingAbout" android:enabled="false"/>
     </PreferenceCategory>
     

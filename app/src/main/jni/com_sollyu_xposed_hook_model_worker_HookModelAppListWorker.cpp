@@ -130,6 +130,15 @@ JNIEXPORT jstring JNICALL Java_com_sollyu_xposed_hook_model_worker_HookModelAppL
     else if (nIndex == 15) return android::jni::helper::StringToJstring("把您的手机型号共享给别人");
     else if (nIndex == 16) return android::jni::helper::StringToJstring("提交机型");
     else if (nIndex == 17) return android::jni::helper::StringToJstring("http://image.4sql.net/soft/hook-model/report_model.php");
+    else if (nIndex == 18) return android::jni::helper::StringToJstring("hookModelSettingUpdateRemoteModel");
+    else if (nIndex == 19) return android::jni::helper::StringToJstring("获得网友分享的机型");
+    else if (nIndex == 20) return android::jni::helper::StringToJstring("更新机型");
+    else if (nIndex == 21) return android::jni::helper::StringToJstring("http://image.4sql.net/soft/hook-model/share_model.json");
+    else if (nIndex == 22) return android::jni::helper::StringToJstring("hookModelSettingUpdate");
+    else if (nIndex == 23) return android::jni::helper::StringToJstring("检查最新版本");
+    else if (nIndex == 24) return android::jni::helper::StringToJstring("检查版本");
+    else if (nIndex == 25) return android::jni::helper::StringToJstring("http://www.sollyu.com/tools/soft/hook_model/update.json");
+
     else return android::jni::helper::StringToJstring("null");
 }
 
